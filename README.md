@@ -1,4 +1,5 @@
 # Founder Equity Calculator
+## Note: Generated in like 1h using Claude Code
 
 A comprehensive web application for startup founders to plan equity splits, model funding rounds, track dilution, and analyze exit scenarios with an interactive timeline-based visualization.
 
