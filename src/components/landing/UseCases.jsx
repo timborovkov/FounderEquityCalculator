@@ -7,38 +7,43 @@ const useCases = [
     icon: Laptop,
     title: 'SaaS Startups',
     description: 'Model recurring revenue growth and plan funding rounds based on ARR milestones.',
-    example: 'Seed round at $10M post-money, Series A at $50M with 20% dilution'
+    example: 'Seed round at $10M post-money, Series A at $50M with 20% dilution',
   },
   {
     icon: Wrench,
     title: 'Hardware Companies',
-    description: 'Navigate capital-intensive fundraising with higher dilution. Plan for manufacturing scale-up.',
-    example: 'Larger rounds with 30-40% dilution, inventory financing considerations'
+    description:
+      'Navigate capital-intensive fundraising with higher dilution. Plan for manufacturing scale-up.',
+    example: 'Larger rounds with 30-40% dilution, inventory financing considerations',
   },
   {
     icon: ShoppingCart,
     title: 'Marketplace Platforms',
-    description: 'Balance growth capital needs with founder ownership. Model two-sided marketplace dynamics.',
-    example: 'Aggressive early dilution for market capture, followed by profitable growth'
+    description:
+      'Balance growth capital needs with founder ownership. Model two-sided marketplace dynamics.',
+    example: 'Aggressive early dilution for market capture, followed by profitable growth',
   },
   {
     icon: Pill,
     title: 'Biotech & HealthTech',
-    description: 'Long development cycles require careful runway planning. Model multiple funding rounds before revenue.',
-    example: 'Series A-C before product launch, managing 60%+ total dilution'
+    description:
+      'Long development cycles require careful runway planning. Model multiple funding rounds before revenue.',
+    example: 'Series A-C before product launch, managing 60%+ total dilution',
   },
   {
     icon: Lightbulb,
     title: 'Deep Tech',
-    description: 'R&D-heavy companies need patient capital. Plan dilution while reaching technical milestones.',
-    example: 'Grant funding + equity rounds, SAFE notes for bridge financing'
+    description:
+      'R&D-heavy companies need patient capital. Plan dilution while reaching technical milestones.',
+    example: 'Grant funding + equity rounds, SAFE notes for bridge financing',
   },
   {
     icon: Building2,
     title: 'Bootstrap to Scale',
-    description: 'Start bootstrapped, take smart capital later. Maintain founder control while accelerating growth.',
-    example: 'Launch without funding, raise growth round at strong valuation'
-  }
+    description:
+      'Start bootstrapped, take smart capital later. Maintain founder control while accelerating growth.',
+    example: 'Launch without funding, raise growth round at strong valuation',
+  },
 ]
 
 export default function UseCases() {
@@ -59,8 +64,8 @@ export default function UseCases() {
             of Startup
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Whether you're building software, hardware, or biotech, our calculator
-            adapts to your unique fundraising journey.
+            Whether you&apos;re building software, hardware, or biotech, our calculator adapts to
+            your unique fundraising journey.
           </p>
         </motion.div>
 
@@ -80,9 +85,7 @@ export default function UseCases() {
                     <useCase.icon className="w-8 h-8 text-white" />
                   </div>
                   <CardTitle className="text-2xl mb-2">{useCase.title}</CardTitle>
-                  <CardDescription className="text-base">
-                    {useCase.description}
-                  </CardDescription>
+                  <CardDescription className="text-base">{useCase.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <div className="bg-muted/50 rounded-lg p-4 border-l-4 border-primary-500">
@@ -107,13 +110,11 @@ export default function UseCases() {
         >
           <Card className="max-w-3xl mx-auto bg-gradient-primary text-white border-0">
             <CardHeader>
-              <CardTitle className="text-2xl mb-2">
-                Not Sure Where to Start?
-              </CardTitle>
+              <CardTitle className="text-2xl mb-2">Not Sure Where to Start?</CardTitle>
               <CardDescription className="text-blue-100 text-base">
-                Use our template scenarios to see how companies similar to yours
-                typically structure their equity and fundraising. Templates include
-                YC standard terms, typical Series A structures, and more.
+                Use our template scenarios to see how companies similar to yours typically structure
+                their equity and fundraising. Templates include YC standard terms, typical Series A
+                structures, and more.
               </CardDescription>
             </CardHeader>
           </Card>

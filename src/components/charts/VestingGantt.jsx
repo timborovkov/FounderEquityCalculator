@@ -40,7 +40,7 @@ export default function VestingGantt() {
           percentVested: vesting.percentVested,
           vestingMonths: founder.vestingMonths,
           cliffMonths: founder.cliffMonths,
-          monthsElapsed: differenceInMonths(currentDate, startDate)
+          monthsElapsed: differenceInMonths(currentDate, startDate),
         })
       }
     })
@@ -72,7 +72,7 @@ export default function VestingGantt() {
           percentVested: vesting.percentVested,
           vestingMonths: emp.vestingMonths || 48,
           cliffMonths: emp.cliffMonths || 12,
-          monthsElapsed: differenceInMonths(currentDate, startDate)
+          monthsElapsed: differenceInMonths(currentDate, startDate),
         })
       }
     })
@@ -85,9 +85,7 @@ export default function VestingGantt() {
       <Card>
         <CardHeader>
           <CardTitle>Vesting Schedules</CardTitle>
-          <CardDescription>
-            Timeline view of founder and employee vesting
-          </CardDescription>
+          <CardDescription>Timeline view of founder and employee vesting</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-64 flex items-center justify-center text-muted-foreground">
@@ -102,9 +100,7 @@ export default function VestingGantt() {
     <Card>
       <CardHeader>
         <CardTitle>Vesting Schedules</CardTitle>
-        <CardDescription>
-          Track vesting progress for all stakeholders
-        </CardDescription>
+        <CardDescription>Track vesting progress for all stakeholders</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
@@ -127,9 +123,7 @@ export default function VestingGantt() {
 
                 <div className="flex justify-between text-xs text-muted-foreground">
                   <span>{format(item.startDate, 'MMM yyyy')}</span>
-                  <span className="font-medium">
-                    Cliff: {format(item.cliffDate, 'MMM yyyy')}
-                  </span>
+                  <span className="font-medium">Cliff: {format(item.cliffDate, 'MMM yyyy')}</span>
                   <span>{format(item.endDate, 'MMM yyyy')}</span>
                 </div>
               </div>

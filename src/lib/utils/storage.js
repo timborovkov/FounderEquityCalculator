@@ -30,14 +30,11 @@ export function saveSession(name, data) {
       id,
       name,
       timestamp,
-      preview: generatePreview(data)
+      preview: generatePreview(data),
     }
 
     // Save the actual data
-    localStorage.setItem(
-      `${STORAGE_KEY_PREFIX}${id}`,
-      JSON.stringify(data)
-    )
+    localStorage.setItem(`${STORAGE_KEY_PREFIX}${id}`, JSON.stringify(data))
 
     // Update saves list
     const saves = getSavedSessions()
@@ -149,7 +146,7 @@ export function importFromJSON(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader()
 
-    reader.onload = (e) => {
+    reader.onload = e => {
       try {
         const data = JSON.parse(e.target.result)
         resolve(data)

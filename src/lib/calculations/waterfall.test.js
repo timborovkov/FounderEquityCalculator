@@ -1,9 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import {
-  calculateLiquidationWaterfall,
-  calculateIRR,
-  calculateMOIC
-} from './waterfall'
+import { calculateLiquidationWaterfall, calculateMOIC } from './waterfall'
 
 describe('waterfall calculations', () => {
   describe('calculateMOIC', () => {
@@ -34,15 +30,15 @@ describe('waterfall calculations', () => {
       const stakeholders = [
         { name: 'Founder 1', type: 'founder', ownership: 40, shares: 4000000 },
         { name: 'Founder 2', type: 'founder', ownership: 40, shares: 4000000 },
-        { name: 'Series A', type: 'investor', ownership: 20, shares: 2000000 }
+        { name: 'Series A', type: 'investor', ownership: 20, shares: 2000000 },
       ]
       const rounds = [
         {
           leadInvestors: ['Series A'],
           investment: 10000000,
           liquidationPreference: 1,
-          participating: false
-        }
+          participating: false,
+        },
       ]
 
       const result = calculateLiquidationWaterfall(exitValuation, stakeholders, rounds)
@@ -59,15 +55,15 @@ describe('waterfall calculations', () => {
       const exitValuation = 100000000
       const stakeholders = [
         { name: 'Founder', type: 'founder', ownership: 80, shares: 8000000 },
-        { name: 'Investor', type: 'investor', ownership: 20, shares: 2000000 }
+        { name: 'Investor', type: 'investor', ownership: 20, shares: 2000000 },
       ]
       const rounds = [
         {
           leadInvestors: ['Investor'],
           investment: 10000000,
           liquidationPreference: 1,
-          participating: true
-        }
+          participating: true,
+        },
       ]
 
       const result = calculateLiquidationWaterfall(exitValuation, stakeholders, rounds)
@@ -81,15 +77,15 @@ describe('waterfall calculations', () => {
       const exitValuation = 30000000
       const stakeholders = [
         { name: 'Founder', type: 'founder', ownership: 70, shares: 7000000 },
-        { name: 'Investor', type: 'investor', ownership: 30, shares: 3000000 }
+        { name: 'Investor', type: 'investor', ownership: 30, shares: 3000000 },
       ]
       const rounds = [
         {
           leadInvestors: ['Investor'],
           investment: 10000000,
           liquidationPreference: 2,
-          participating: false
-        }
+          participating: false,
+        },
       ]
 
       const result = calculateLiquidationWaterfall(exitValuation, stakeholders, rounds)
@@ -103,15 +99,15 @@ describe('waterfall calculations', () => {
       const exitValuation = 5000000
       const stakeholders = [
         { name: 'Founder', type: 'founder', ownership: 70, shares: 7000000 },
-        { name: 'Investor', type: 'investor', ownership: 30, shares: 3000000 }
+        { name: 'Investor', type: 'investor', ownership: 30, shares: 3000000 },
       ]
       const rounds = [
         {
           leadInvestors: ['Investor'],
           investment: 10000000,
           liquidationPreference: 1,
-          participating: false
-        }
+          participating: false,
+        },
       ]
 
       const result = calculateLiquidationWaterfall(exitValuation, stakeholders, rounds)

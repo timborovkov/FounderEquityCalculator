@@ -5,6 +5,7 @@ This document outlines all the enhancements made to the Founder Equity Calculato
 ## ✅ Completed Improvements
 
 ### 1. Unit Testing with Vitest (✓ Complete)
+
 - **Setup**: Installed Vitest, @testing-library/react, jsdom, and related dependencies
 - **Configuration**: Created `vitest.config.js` with proper settings
 - **Test Coverage**: Written 41 passing tests across 4 test suites:
@@ -18,6 +19,7 @@ This document outlines all the enhancements made to the Founder Equity Calculato
   - `npm test:coverage` - Generate coverage reports
 
 ### 2. UI/UX Fixes (✓ Complete)
+
 - **Sidebar Navigation**: Fixed buttons to properly switch sections and tabs
 - **Timeline Improvements**:
   - Added horizontal scrolling with touch-pan support
@@ -28,6 +30,7 @@ This document outlines all the enhancements made to the Founder Equity Calculato
 - **Controlled Tabs**: Made tab switching work properly with sidebar clicks
 
 ### 3. Improved PDF Export (✓ Complete)
+
 - **Enhanced `exportToPDF` function**:
   - Now accepts company, founders, rounds, and employees data
   - Generates multi-page reports with proper page breaks
@@ -42,6 +45,7 @@ This document outlines all the enhancements made to the Founder Equity Calculato
   - Future-proof for adding actual chart captures
 
 ### 4. Error Handling (✓ Complete)
+
 - **ErrorBoundary Component**:
   - Catches React errors globally
   - Shows user-friendly error messages
@@ -50,6 +54,7 @@ This document outlines all the enhancements made to the Founder Equity Calculato
   - Integrated into main.jsx
 
 ### 5. Smart Validation (✓ Complete)
+
 - **Validation Utilities**:
   - Excessive dilution warnings (>30%, >40%)
   - Option pool size and utilization checks
@@ -65,8 +70,10 @@ This document outlines all the enhancements made to the Founder Equity Calculato
 ## 📋 Remaining Improvements
 
 ### 1. End-to-End Testing with Playwright
+
 **Status**: Not started
 **Tasks**:
+
 - Install Playwright and configure
 - Write E2E tests for:
   - Landing page navigation
@@ -77,8 +84,10 @@ This document outlines all the enhancements made to the Founder Equity Calculato
   - Share link generation
 
 ### 2. Enhanced UI Design & Polish
+
 **Status**: Not started
 **Tasks**:
+
 - Refine color palette and gradients
 - Add micro-interactions and animations
 - Improve button styles and hover states
@@ -88,8 +97,10 @@ This document outlines all the enhancements made to the Founder Equity Calculato
 - Add success/error toast notifications
 
 ### 3. Mobile Responsiveness
+
 **Status**: Partial (basic responsive classes in place)
 **Tasks Needed**:
+
 - Test on actual mobile devices
 - Optimize timeline for mobile (vertical layout?)
 - Make navigation responsive (hamburger menu)
@@ -99,8 +110,10 @@ This document outlines all the enhancements made to the Founder Equity Calculato
 - Optimize font sizes for mobile
 
 ### 4. Accessibility Improvements
+
 **Status**: Not started
 **Tasks**:
+
 - Add ARIA labels to all interactive elements
 - Ensure keyboard navigation works everywhere
 - Add focus indicators for keyboard users
@@ -111,8 +124,10 @@ This document outlines all the enhancements made to the Founder Equity Calculato
 - Test with accessibility audit tools
 
 ### 5. SEO Improvements
+
 **Status**: Basic (title/description in index.html)
 **Tasks Needed**:
+
 - Add comprehensive meta tags
 - Create Open Graph tags for social sharing
 - Add Twitter Card meta tags

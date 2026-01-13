@@ -1,8 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import { subMonths, addMonths } from 'date-fns'
-import {
-  calculateVestedShares
-} from './vesting'
+import { calculateVestedShares } from './vesting'
 
 describe('vesting calculations', () => {
   const now = new Date('2024-01-01')

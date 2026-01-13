@@ -5,7 +5,7 @@ import {
   checkFounderSplit,
   checkVestingSchedule,
   checkLiquidationPreference,
-  validateCompanyData
+  validateCompanyData,
 } from './validation'
 
 describe('validation utilities', () => {
@@ -62,10 +62,7 @@ describe('validation utilities', () => {
 
   describe('checkFounderSplit', () => {
     it('should warn about large disparities with 2 founders', () => {
-      const founders = [
-        { equity: 70 },
-        { equity: 30 }
-      ]
+      const founders = [{ equity: 70 }, { equity: 30 }]
 
       const result = checkFounderSplit(founders)
 
@@ -74,11 +71,7 @@ describe('validation utilities', () => {
     })
 
     it('should warn about overwhelming majority', () => {
-      const founders = [
-        { equity: 65 },
-        { equity: 20 },
-        { equity: 15 }
-      ]
+      const founders = [{ equity: 65 }, { equity: 20 }, { equity: 15 }]
 
       const result = checkFounderSplit(founders)
 
@@ -87,10 +80,7 @@ describe('validation utilities', () => {
     })
 
     it('should not warn for balanced splits', () => {
-      const founders = [
-        { equity: 50 },
-        { equity: 50 }
-      ]
+      const founders = [{ equity: 50 }, { equity: 50 }]
 
       const result = checkFounderSplit(founders)
       expect(result).toBeNull()

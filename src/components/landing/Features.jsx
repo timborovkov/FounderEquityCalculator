@@ -11,7 +11,7 @@ import {
   GitBranch,
   Calculator,
   DollarSign,
-  Award
+  Award,
 } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 
@@ -19,63 +19,75 @@ const features = [
   {
     icon: Clock,
     title: 'Interactive Timeline',
-    description: 'Visualize your startup journey with a beautiful, drag-and-drop timeline showing funding rounds, vesting milestones, and key events.'
+    description:
+      'Visualize your startup journey with a beautiful, drag-and-drop timeline showing funding rounds, vesting milestones, and key events.',
   },
   {
     icon: Users,
     title: 'Founder Equity Calculator',
-    description: 'Fair equity splits based on contribution weighting, time invested, and capital. Handle co-founder departures with reverse vesting.'
+    description:
+      'Fair equity splits based on contribution weighting, time invested, and capital. Handle co-founder departures with reverse vesting.',
   },
   {
     icon: TrendingUp,
     title: 'Funding Rounds Manager',
-    description: 'Model multiple funding rounds from pre-seed to Series D+. Automatic dilution calculations and liquidation preference tracking.'
+    description:
+      'Model multiple funding rounds from pre-seed to Series D+. Automatic dilution calculations and liquidation preference tracking.',
   },
   {
     icon: PieChart,
     title: 'Real-Time Cap Table',
-    description: 'See ownership breakdown at any point in time. Track fully diluted vs current ownership for all stakeholders.'
+    description:
+      'See ownership breakdown at any point in time. Track fully diluted vs current ownership for all stakeholders.',
   },
   {
     icon: BarChart3,
     title: 'Stock Option Pool',
-    description: 'Manage employee equity grants with vesting schedules. Track pool utilization and plan for refreshes between rounds.'
+    description:
+      'Manage employee equity grants with vesting schedules. Track pool utilization and plan for refreshes between rounds.',
   },
   {
     icon: DollarSign,
     title: 'Exit Scenario Modeling',
-    description: 'Waterfall analysis at different exit valuations. See exactly who gets paid what, accounting for liquidation preferences.'
+    description:
+      'Waterfall analysis at different exit valuations. See exactly who gets paid what, accounting for liquidation preferences.',
   },
   {
     icon: Calculator,
     title: 'Valuation Tools',
-    description: 'Pre/post-money calculators, price per share, and valuation evolution charts. Understand your company\'s worth.'
+    description:
+      "Pre/post-money calculators, price per share, and valuation evolution charts. Understand your company's worth.",
   },
   {
     icon: GitBranch,
     title: 'Scenario Comparison',
-    description: 'Compare side-by-side timelines and outcomes. Model different fundraising strategies and their impact on dilution.'
+    description:
+      'Compare side-by-side timelines and outcomes. Model different fundraising strategies and their impact on dilution.',
   },
   {
     icon: FileText,
     title: 'Export & Share',
-    description: 'Export beautiful PDF reports with cap tables, charts, and timelines. Share scenarios via link with co-founders and advisors.'
+    description:
+      'Export beautiful PDF reports with cap tables, charts, and timelines. Share scenarios via link with co-founders and advisors.',
   },
   {
     icon: Shield,
     title: 'Smart Warnings',
-    description: 'Get alerted about excessive dilution, small option pools, and other common equity mistakes before they happen.'
+    description:
+      'Get alerted about excessive dilution, small option pools, and other common equity mistakes before they happen.',
   },
   {
     icon: Zap,
     title: 'Auto-Save',
-    description: 'Never lose your work. Automatic saving to local storage with manual save points and full undo/redo support.'
+    description:
+      'Never lose your work. Automatic saving to local storage with manual save points and full undo/redo support.',
   },
   {
     icon: Award,
     title: 'Template Scenarios',
-    description: 'Start quickly with pre-loaded templates: YC standard deal, typical Series A, bootstrap to profitability, and more.'
-  }
+    description:
+      'Start quickly with pre-loaded templates: YC standard deal, typical Series A, bootstrap to profitability, and more.',
+  },
 ]
 
 export default function Features() {
@@ -92,11 +104,14 @@ export default function Features() {
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
             Everything You Need to
-            <span className="text-transparent bg-clip-text bg-gradient-primary"> Plan Your Equity</span>
+            <span className="text-transparent bg-clip-text bg-gradient-primary">
+              {' '}
+              Plan Your Equity
+            </span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Comprehensive tools for founders to make informed decisions about equity,
-            funding, and exits. No finance degree required.
+            Comprehensive tools for founders to make informed decisions about equity, funding, and
+            exits. No finance degree required.
           </p>
         </motion.div>
 
@@ -116,9 +131,7 @@ export default function Features() {
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
                   <CardTitle className="text-xl mb-2">{feature.title}</CardTitle>
-                  <CardDescription className="text-base">
-                    {feature.description}
-                  </CardDescription>
+                  <CardDescription className="text-base">{feature.description}</CardDescription>
                 </CardHeader>
               </Card>
             </motion.div>

@@ -1,11 +1,20 @@
 import { useMemo } from 'react'
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import useCalculatorStore from '@/store/useCalculatorStore'
 import { format } from 'date-fns'
 
 export default function DilutionChart() {
-  const { founders, rounds } = useCalculatorStore()
+  const { rounds } = useCalculatorStore()
 
   const chartData = useMemo(() => {
     if (rounds.length === 0) return []
@@ -18,11 +27,11 @@ export default function DilutionChart() {
       date: 'Start',
       founderOwnership: 100,
       investorOwnership: 0,
-      round: 'Initial'
+      round: 'Initial',
     })
 
     // After each round
-    rounds.forEach((round, index) => {
+    rounds.forEach(round => {
       const dilution = (round.investment / round.postMoneyValuation) * 100
       founderOwnership = founderOwnership * (1 - dilution / 100)
       const investorOwnership = 100 - founderOwnership
@@ -31,7 +40,7 @@ export default function DilutionChart() {
         date: format(new Date(round.date), 'MMM yyyy'),
         founderOwnership: parseFloat(founderOwnership.toFixed(2)),
         investorOwnership: parseFloat(investorOwnership.toFixed(2)),
-        round: round.type
+        round: round.type,
       })
     })
 
@@ -59,9 +68,7 @@ export default function DilutionChart() {
       <Card>
         <CardHeader>
           <CardTitle>Dilution Over Time</CardTitle>
-          <CardDescription>
-            Track ownership changes as funding rounds happen
-          </CardDescription>
+          <CardDescription>Track ownership changes as funding rounds happen</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-64 flex items-center justify-center text-muted-foreground">
@@ -76,9 +83,7 @@ export default function DilutionChart() {
     <Card>
       <CardHeader>
         <CardTitle>Dilution Over Time</CardTitle>
-        <CardDescription>
-          Founder ownership decreases as investors join
-        </CardDescription>
+        <CardDescription>Founder ownership decreases as investors join</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>

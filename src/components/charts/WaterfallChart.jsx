@@ -1,5 +1,14 @@
 import { useMemo } from 'react'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Cell,
+} from 'recharts'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 
 const COLORS = ['#0ea5e9', '#a855f7', '#10b981', '#f59e0b', '#ef4444']
@@ -11,11 +20,11 @@ export default function WaterfallChart({ waterfallData, exitValuation }) {
     return waterfallData.stakeholderTotals.map((st, index) => ({
       stakeholder: st.stakeholder,
       payout: st.total / 1000000, // Convert to millions
-      color: COLORS[index % COLORS.length]
+      color: COLORS[index % COLORS.length],
     }))
   }, [waterfallData])
 
-  const formatCurrency = (value) => {
+  const formatCurrency = value => {
     return `$${value.toFixed(2)}M`
   }
 
@@ -41,9 +50,7 @@ export default function WaterfallChart({ waterfallData, exitValuation }) {
       <Card>
         <CardHeader>
           <CardTitle>Waterfall Analysis</CardTitle>
-          <CardDescription>
-            Distribution of exit proceeds to stakeholders
-          </CardDescription>
+          <CardDescription>Distribution of exit proceeds to stakeholders</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-64 flex items-center justify-center text-muted-foreground">

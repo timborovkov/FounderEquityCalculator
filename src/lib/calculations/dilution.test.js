@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest'
 import {
   calculateRoundDilution,
   calculateCurrentOwnership,
-  calculateTotalDilution
+  calculateTotalDilution,
 } from './dilution'
 
 describe('dilution calculations', () => {
@@ -40,9 +40,7 @@ describe('dilution calculations', () => {
     })
 
     it('should calculate dilution for single round', () => {
-      const rounds = [
-        { dilutionPercentage: 20 }
-      ]
+      const rounds = [{ dilutionPercentage: 20 }]
 
       const totalDilution = calculateTotalDilution(rounds)
       expect(totalDilution).toBe(20)
@@ -53,7 +51,7 @@ describe('dilution calculations', () => {
     it('should calculate ownership for founders only', () => {
       const founders = [
         { id: '1', name: 'Founder 1', equity: 50 },
-        { id: '2', name: 'Founder 2', equity: 50 }
+        { id: '2', name: 'Founder 2', equity: 50 },
       ]
 
       const result = calculateCurrentOwnership(founders, [], [])
@@ -66,7 +64,7 @@ describe('dilution calculations', () => {
     it('should calculate ownership with funding rounds', () => {
       const founders = [
         { id: '1', name: 'Founder 1', equity: 50 },
-        { id: '2', name: 'Founder 2', equity: 50 }
+        { id: '2', name: 'Founder 2', equity: 50 },
       ]
 
       const rounds = [
@@ -75,8 +73,8 @@ describe('dilution calculations', () => {
           investment: 2000000,
           preMoneyValuation: 8000000,
           postMoneyValuation: 10000000,
-          leadInvestors: ['VC Fund']
-        }
+          leadInvestors: ['VC Fund'],
+        },
       ]
 
       const result = calculateCurrentOwnership(founders, rounds, [])

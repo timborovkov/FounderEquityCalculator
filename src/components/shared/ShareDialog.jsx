@@ -35,7 +35,7 @@ export default function ShareDialog({ isOpen, onClose }) {
         rounds: store.rounds,
         employees: store.employees,
         optionPool: store.optionPool,
-        scenarios: store.scenarios
+        scenarios: store.scenarios,
       }
 
       const url = generateShareURL(state)
@@ -55,12 +55,6 @@ export default function ShareDialog({ isOpen, onClose }) {
       setTimeout(() => setCopied(false), 2000)
     } catch (err) {
       setError('Failed to copy to clipboard')
-    }
-  }
-
-  const handleOpen = () => {
-    if (!shareURL) {
-      handleGenerateLink()
     }
   }
 
@@ -97,14 +91,12 @@ export default function ShareDialog({ isOpen, onClose }) {
                 id="share-url"
                 value={shareURL}
                 readOnly
-                placeholder={generating ? 'Generating link...' : 'Click Generate to create a shareable link'}
+                placeholder={
+                  generating ? 'Generating link...' : 'Click Generate to create a shareable link'
+                }
                 className="flex-1 font-mono text-sm"
               />
-              <Button
-                onClick={handleCopy}
-                disabled={!shareURL || generating}
-                variant="outline"
-              >
+              <Button onClick={handleCopy} disabled={!shareURL || generating} variant="outline">
                 {copied ? (
                   <>
                     <Check className="w-4 h-4 mr-2" />
@@ -134,8 +126,8 @@ export default function ShareDialog({ isOpen, onClose }) {
           <Alert>
             <AlertCircle className="w-4 h-4" />
             <AlertDescription>
-              <strong>Privacy Note:</strong> The link contains all your calculator data encoded
-              in the URL. Anyone with this link can view your equity structure. For sensitive data,
+              <strong>Privacy Note:</strong> The link contains all your calculator data encoded in
+              the URL. Anyone with this link can view your equity structure. For sensitive data,
               consider using the Save feature instead.
             </AlertDescription>
           </Alert>
@@ -143,7 +135,7 @@ export default function ShareDialog({ isOpen, onClose }) {
           {/* Preview of what's being shared */}
           {shareURL && (
             <div className="bg-muted p-4 rounded-lg">
-              <div className="text-sm font-semibold mb-2">What's included in this link:</div>
+              <div className="text-sm font-semibold mb-2">What&apos;s included in this link:</div>
               <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground">
                 <div>• Company: {store.company.name || 'Unnamed'}</div>
                 <div>• Founders: {store.founders.length}</div>

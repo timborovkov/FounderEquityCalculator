@@ -25,7 +25,7 @@ export default function Hero() {
           transition={{
             duration: 20,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
         />
         <motion.div
@@ -37,7 +37,7 @@ export default function Hero() {
           transition={{
             duration: 25,
             repeat: Infinity,
-            ease: "easeInOut"
+            ease: 'easeInOut',
           }}
         />
       </div>
@@ -57,9 +57,7 @@ export default function Hero() {
             transition={{ delay: 0.2 }}
           >
             <TrendingUp className="w-4 h-4" />
-            <span className="text-sm font-medium">
-              Built for founders, by founders
-            </span>
+            <span className="text-sm font-medium">Built for founders, by founders</span>
           </motion.div>
 
           {/* Main heading */}
@@ -69,7 +67,7 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
           >
-            See Your Startup's
+            See Your Startup&apos;s
             <br />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-200 to-purple-200">
               Equity Story Unfold
@@ -83,8 +81,8 @@ export default function Hero() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
           >
-            Plan funding rounds with confidence. Understand dilution before it happens.
-            Model exit scenarios and make data-driven decisions about your equity.
+            Plan funding rounds with confidence. Understand dilution before it happens. Model exit
+            scenarios and make data-driven decisions about your equity.
           </motion.p>
 
           {/* CTA Buttons */}
@@ -131,7 +129,7 @@ export default function Hero() {
                 <div className="text-center">
                   <div className="w-16 h-16 mx-auto mb-3 rounded-full bg-white/20 flex items-center justify-center">
                     <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M8 5v14l11-7z"/>
+                      <path d="M8 5v14l11-7z" />
                     </svg>
                   </div>
                   <p className="text-white text-base font-medium">Watch Demo Video</p>
@@ -153,7 +151,9 @@ export default function Hero() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.7 }}
           >
-            <p className="text-base font-medium">100% Free • No Credit Card • No Sign Up Required</p>
+            <p className="text-base font-medium">
+              100% Free • No Credit Card • No Sign Up Required
+            </p>
           </motion.div>
         </motion.div>
       </div>

@@ -9,7 +9,7 @@ class ErrorBoundary extends React.Component {
     this.state = { hasError: false, error: null, errorInfo: null }
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(_error) {
     return { hasError: true }
   }
 
@@ -17,7 +17,7 @@ class ErrorBoundary extends React.Component {
     console.error('ErrorBoundary caught an error:', error, errorInfo)
     this.setState({
       error,
-      errorInfo
+      errorInfo,
     })
   }
 
@@ -69,7 +69,7 @@ class ErrorBoundary extends React.Component {
                 </Button>
                 <Button
                   variant="outline"
-                  onClick={() => window.location.href = '/'}
+                  onClick={() => (window.location.href = '/')}
                   className="flex-1"
                 >
                   Go Home
@@ -77,8 +77,8 @@ class ErrorBoundary extends React.Component {
               </div>
 
               <div className="text-xs text-muted-foreground">
-                If this problem persists, try clearing your browser cache or contact support.
-                Your data is automatically saved to your browser's local storage.
+                If this problem persists, try clearing your browser cache or contact support. Your
+                data is automatically saved to your browser&apos;s local storage.
               </div>
             </CardContent>
           </Card>

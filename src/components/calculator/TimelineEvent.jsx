@@ -1,12 +1,7 @@
 import { motion } from 'framer-motion'
-import { TrendingUp, Users, Calendar, DollarSign } from 'lucide-react'
+import { TrendingUp, Users, Calendar } from 'lucide-react'
 import { format } from 'date-fns'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 
@@ -15,21 +10,21 @@ const EVENT_TYPES = {
     icon: TrendingUp,
     colors: {
       'pre-seed': 'bg-success-500',
-      'seed': 'bg-primary-500',
+      seed: 'bg-primary-500',
       'series-a': 'bg-secondary-500',
       'series-b': 'bg-purple-500',
       'series-c': 'bg-warning-500',
       'series-d': 'bg-danger-500',
-    }
+    },
   },
   'vesting-milestone': {
     icon: Users,
-    color: 'bg-blue-400'
+    color: 'bg-blue-400',
   },
-  'custom': {
+  custom: {
     icon: Calendar,
-    color: 'bg-gray-400'
-  }
+    color: 'bg-gray-400',
+  },
 }
 
 export default function TimelineEvent({
@@ -39,20 +34,21 @@ export default function TimelineEvent({
   isDragging,
   onDragStart,
   onDragEnd,
-  onClick
+  onClick,
 }) {
   const { type, subtype, date, title, description, data } = event
 
   const EventIcon = EVENT_TYPES[type]?.icon || Calendar
-  const eventColor = type === 'funding-round'
-    ? EVENT_TYPES[type].colors[subtype] || 'bg-primary-500'
-    : EVENT_TYPES[type]?.color || 'bg-gray-400'
+  const eventColor =
+    type === 'funding-round'
+      ? EVENT_TYPES[type].colors[subtype] || 'bg-primary-500'
+      : EVENT_TYPES[type]?.color || 'bg-gray-400'
 
   // Funding rounds are larger and more prominent
   const eventSize = type === 'funding-round' ? 'w-12 h-12' : 'w-9 h-9'
   const iconSize = type === 'funding-round' ? 'w-6 h-6' : 'w-4 h-4'
 
-  const formatCurrency = (amount) => {
+  const formatCurrency = amount => {
     if (amount >= 1e9) return `$${(amount / 1e9).toFixed(1)}B`
     if (amount >= 1e6) return `$${(amount / 1e6).toFixed(1)}M`
     if (amount >= 1e3) return `$${(amount / 1e3).toFixed(1)}K`
@@ -70,10 +66,7 @@ export default function TimelineEvent({
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
             style={{ x, top: `${yOffset}px` }}
-            className={cn(
-              'absolute cursor-grab active:cursor-grabbing',
-              isDragging && 'z-50'
-            )}
+            className={cn('absolute cursor-grab active:cursor-grabbing', isDragging && 'z-50')}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             onClick={onClick}
@@ -94,14 +87,18 @@ export default function TimelineEvent({
             </div>
 
             {/* Event label */}
-            <div className={cn(
-              'absolute left-1/2 -translate-x-1/2 whitespace-nowrap',
-              type === 'funding-round' ? 'top-14' : 'top-11'
-            )}>
-              <div className={cn(
-                'font-medium text-center mb-1',
-                type === 'funding-round' ? 'text-sm' : 'text-xs'
-              )}>
+            <div
+              className={cn(
+                'absolute left-1/2 -translate-x-1/2 whitespace-nowrap',
+                type === 'funding-round' ? 'top-14' : 'top-11'
+              )}
+            >
+              <div
+                className={cn(
+                  'font-medium text-center mb-1',
+                  type === 'funding-round' ? 'text-sm' : 'text-xs'
+                )}
+              >
                 {title || format(date, 'MMM d, yyyy')}
               </div>
               {type === 'funding-round' && data?.investment && (
@@ -116,13 +113,9 @@ export default function TimelineEvent({
         <TooltipContent side="top" className="max-w-xs">
           <div className="space-y-2">
             <div className="font-semibold">{title}</div>
-            <div className="text-xs text-muted-foreground">
-              {format(date, 'MMMM d, yyyy')}
-            </div>
+            <div className="text-xs text-muted-foreground">{format(date, 'MMMM d, yyyy')}</div>
 
-            {description && (
-              <div className="text-sm">{description}</div>
-            )}
+            {description && <div className="text-sm">{description}</div>}
 
             {type === 'funding-round' && data && (
               <div className="space-y-1 text-sm pt-2 border-t">
@@ -170,9 +163,7 @@ export default function TimelineEvent({
               </div>
             )}
 
-            <div className="text-xs text-muted-foreground pt-2 border-t">
-              Drag to adjust date
-            </div>
+            <div className="text-xs text-muted-foreground pt-2 border-t">Drag to adjust date</div>
           </div>
         </TooltipContent>
       </Tooltip>

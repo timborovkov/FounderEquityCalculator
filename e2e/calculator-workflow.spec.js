@@ -31,7 +31,10 @@ test.describe('Calculator Workflow', () => {
     await page.getByRole('button', { name: /founders/i }).click()
 
     // Click add founder button
-    await page.getByRole('button', { name: /add founder/i }).first().click()
+    await page
+      .getByRole('button', { name: /add founder/i })
+      .first()
+      .click()
 
     // Dialog should open
     await expect(page.getByRole('dialog')).toBeVisible()
@@ -53,7 +56,10 @@ test.describe('Calculator Workflow', () => {
     await page.getByRole('button', { name: /funding rounds/i }).click()
 
     // Click add round button
-    await page.getByRole('button', { name: /add round/i }).first().click()
+    await page
+      .getByRole('button', { name: /add round/i })
+      .first()
+      .click()
 
     // Dialog should open
     await expect(page.getByRole('dialog')).toBeVisible()
@@ -63,7 +69,10 @@ test.describe('Calculator Workflow', () => {
     await page.getByLabel(/investment amount/i).fill('1000000')
 
     // Save round
-    await page.getByRole('button', { name: /add round/i }).last().click()
+    await page
+      .getByRole('button', { name: /add round/i })
+      .last()
+      .click()
 
     // Check that round was added (look for valuation display)
     await expect(page.getByText(/5\.00M/i)).toBeVisible()
@@ -88,15 +97,24 @@ test.describe('Calculator Workflow', () => {
 
   test('should switch between timeline and table views', async ({ page }) => {
     // Start on timeline view
-    await expect(page.getByRole('tab', { name: /timeline view/i })).toHaveAttribute('data-state', 'active')
+    await expect(page.getByRole('tab', { name: /timeline view/i })).toHaveAttribute(
+      'data-state',
+      'active'
+    )
 
     // Switch to table view
     await page.getByRole('tab', { name: /table view/i }).click()
-    await expect(page.getByRole('tab', { name: /table view/i })).toHaveAttribute('data-state', 'active')
+    await expect(page.getByRole('tab', { name: /table view/i })).toHaveAttribute(
+      'data-state',
+      'active'
+    )
 
     // Switch back to timeline view
     await page.getByRole('tab', { name: /timeline view/i }).click()
-    await expect(page.getByRole('tab', { name: /timeline view/i })).toHaveAttribute('data-state', 'active')
+    await expect(page.getByRole('tab', { name: /timeline view/i })).toHaveAttribute(
+      'data-state',
+      'active'
+    )
   })
 
   test('should show summary panel with metrics', async ({ page }) => {

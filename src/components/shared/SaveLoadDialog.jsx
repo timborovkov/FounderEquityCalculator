@@ -20,7 +20,7 @@ import {
   saveSession,
   loadSession,
   deleteSession,
-  renameSession
+  renameSession,
 } from '@/lib/utils/storage'
 import { format } from 'date-fns'
 
@@ -58,7 +58,7 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
         rounds: store.rounds,
         employees: store.employees,
         optionPool: store.optionPool,
-        scenarios: store.scenarios
+        scenarios: store.scenarios,
       }
 
       saveSession(saveName, stateToSave)
@@ -70,7 +70,7 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
     }
   }
 
-  const handleLoad = (id) => {
+  const handleLoad = id => {
     try {
       const data = loadSession(id)
       store.loadTemplate(data)
@@ -81,7 +81,7 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
     }
   }
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     if (!confirm('Are you sure you want to delete this save?')) {
       return
     }
@@ -94,7 +94,7 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
     }
   }
 
-  const startEditing = (save) => {
+  const startEditing = save => {
     setEditingId(save.id)
     setEditingName(save.name)
   }
@@ -104,7 +104,7 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
     setEditingName('')
   }
 
-  const saveEditing = (id) => {
+  const saveEditing = id => {
     if (!editingName.trim()) {
       alert('Name cannot be empty')
       return
@@ -149,8 +149,8 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
                 id="save-name"
                 placeholder="e.g., After Series A, Q4 2024 Model"
                 value={saveName}
-                onChange={(e) => setSaveName(e.target.value)}
-                onKeyDown={(e) => {
+                onChange={e => setSaveName(e.target.value)}
+                onKeyDown={e => {
                   if (e.key === 'Enter') {
                     handleSave()
                   }
@@ -186,7 +186,7 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
           <TabsContent value="load" className="space-y-4">
             {savedSessions.length > 0 ? (
               <div className="space-y-2">
-                {savedSessions.map((save) => (
+                {savedSessions.map(save => (
                   <Card key={save.id} className="hover:border-primary-200 transition-colors">
                     <CardContent className="pt-6">
                       <div className="flex items-start justify-between">
@@ -195,8 +195,8 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
                             <div className="flex items-center gap-2">
                               <Input
                                 value={editingName}
-                                onChange={(e) => setEditingName(e.target.value)}
-                                onKeyDown={(e) => {
+                                onChange={e => setEditingName(e.target.value)}
+                                onKeyDown={e => {
                                   if (e.key === 'Enter') {
                                     saveEditing(save.id)
                                   } else if (e.key === 'Escape') {
@@ -212,11 +212,7 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
                               >
                                 <Check className="w-4 h-4" />
                               </Button>
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={cancelEditing}
-                              >
+                              <Button size="sm" variant="ghost" onClick={cancelEditing}>
                                 <X className="w-4 h-4" />
                               </Button>
                             </div>
@@ -232,13 +228,16 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
                             {save.preview && (
                               <>
                                 <Badge variant="secondary">
-                                  {save.preview.foundersCount} {save.preview.foundersCount === 1 ? 'Founder' : 'Founders'}
+                                  {save.preview.foundersCount}{' '}
+                                  {save.preview.foundersCount === 1 ? 'Founder' : 'Founders'}
                                 </Badge>
                                 <Badge variant="secondary">
-                                  {save.preview.roundsCount} {save.preview.roundsCount === 1 ? 'Round' : 'Rounds'}
+                                  {save.preview.roundsCount}{' '}
+                                  {save.preview.roundsCount === 1 ? 'Round' : 'Rounds'}
                                 </Badge>
                                 <Badge variant="secondary">
-                                  {save.preview.employeesCount} {save.preview.employeesCount === 1 ? 'Employee' : 'Employees'}
+                                  {save.preview.employeesCount}{' '}
+                                  {save.preview.employeesCount === 1 ? 'Employee' : 'Employees'}
                                 </Badge>
                               </>
                             )}
@@ -248,11 +247,7 @@ export default function SaveLoadDialog({ isOpen, onClose, mode = 'save' }) {
                         <div className="flex gap-1 ml-4">
                           {editingId !== save.id && (
                             <>
-                              <Button
-                                size="sm"
-                                variant="ghost"
-                                onClick={() => startEditing(save)}
-                              >
+                              <Button size="sm" variant="ghost" onClick={() => startEditing(save)}>
                                 <Edit2 className="w-4 h-4" />
                               </Button>
                               <Button

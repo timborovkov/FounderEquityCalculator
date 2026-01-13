@@ -1,5 +1,14 @@
 import { useMemo } from 'react'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from 'recharts'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import useCalculatorStore from '@/store/useCalculatorStore'
 import { format } from 'date-fns'
@@ -9,15 +18,18 @@ export default function ValuationChart() {
 
   const chartData = useMemo(() => {
     return rounds.map(round => ({
-      round: round.type.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' '),
+      round: round.type
+        .split('-')
+        .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' '),
       date: format(new Date(round.date), 'MMM yyyy'),
       preMoneyValuation: round.preMoneyValuation / 1000000, // Convert to millions
       investment: round.investment / 1000000,
-      postMoneyValuation: round.postMoneyValuation / 1000000
+      postMoneyValuation: round.postMoneyValuation / 1000000,
     }))
   }, [rounds])
 
-  const formatCurrency = (value) => {
+  const formatCurrency = value => {
     return `$${value.toFixed(1)}M`
   }
 
@@ -42,9 +54,7 @@ export default function ValuationChart() {
       <Card>
         <CardHeader>
           <CardTitle>Valuation Growth</CardTitle>
-          <CardDescription>
-            Company valuation evolution across funding rounds
-          </CardDescription>
+          <CardDescription>Company valuation evolution across funding rounds</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="h-64 flex items-center justify-center text-muted-foreground">
@@ -59,9 +69,7 @@ export default function ValuationChart() {
     <Card>
       <CardHeader>
         <CardTitle>Valuation Growth</CardTitle>
-        <CardDescription>
-          Pre-money, investment, and post-money valuations
-        </CardDescription>
+        <CardDescription>Pre-money, investment, and post-money valuations</CardDescription>
       </CardHeader>
       <CardContent>
         <ResponsiveContainer width="100%" height={300}>

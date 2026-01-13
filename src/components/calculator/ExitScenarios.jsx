@@ -1,11 +1,10 @@
 import { useState, useMemo } from 'react'
-import { DollarSign, Plus, Trash2, TrendingUp, Calculator } from 'lucide-react'
+import { DollarSign, Plus, Trash2, Calculator } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Separator } from '@/components/ui/separator'
 import {
   Dialog,
   DialogContent,
@@ -23,27 +22,21 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import WaterfallChart from '@/components/charts/WaterfallChart'
 import useCalculatorStore from '@/store/useCalculatorStore'
-import { calculateLiquidationWaterfall, calculateIRR, calculateMOIC } from '@/lib/calculations/waterfall'
+import { calculateLiquidationWaterfall, calculateMOIC } from '@/lib/calculations/waterfall'
 import { calculateCurrentOwnership } from '@/lib/calculations/dilution'
 
 export default function ExitScenarios() {
-  const { company, founders, rounds, employees, scenarios, addScenario, updateScenario, removeScenario } = useCalculatorStore()
+  const { founders, rounds, employees, scenarios, addScenario, updateScenario, removeScenario } =
+    useCalculatorStore()
   const [editingScenario, setEditingScenario] = useState(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [selectedScenario, setSelectedScenario] = useState(null)
 
   const [formData, setFormData] = useState({
     name: '',
-    exitValuation: 0
+    exitValuation: 0,
   })
 
   // Get current ownership for waterfall calculations
@@ -55,14 +48,10 @@ export default function ExitScenarios() {
   const waterfallData = useMemo(() => {
     if (!selectedScenario) return null
 
-    return calculateLiquidationWaterfall(
-      selectedScenario.exitValuation,
-      stakeholders,
-      rounds
-    )
+    return calculateLiquidationWaterfall(selectedScenario.exitValuation, stakeholders, rounds)
   }, [selectedScenario, stakeholders, rounds])
 
-  const formatCurrency = (amount) => {
+  const formatCurrency = amount => {
     if (amount >= 1e9) return `$${(amount / 1e9).toFixed(2)}B`
     if (amount >= 1e6) return `$${(amount / 1e6).toFixed(2)}M`
     if (amount >= 1e3) return `$${(amount / 1e3).toFixed(0)}K`
@@ -73,13 +62,13 @@ export default function ExitScenarios() {
     if (scenario) {
       setFormData({
         name: scenario.name,
-        exitValuation: scenario.exitValuation
+        exitValuation: scenario.exitValuation,
       })
       setEditingScenario(scenario.id)
     } else {
       setFormData({
         name: '',
-        exitValuation: 0
+        exitValuation: 0,
       })
       setEditingScenario(null)
     }
@@ -89,13 +78,13 @@ export default function ExitScenarios() {
   const handleSave = () => {
     const data = {
       ...formData,
-      exitValuation: parseFloat(formData.exitValuation)
+      exitValuation: parseFloat(formData.exitValuation),
     }
 
     if (editingScenario) {
       updateScenario(editingScenario, data)
     } else {
-      const newScenario = addScenario(data)
+      addScenario(data)
       // Select the newly created scenario
       setTimeout(() => {
         const created = scenarios.find(s => s.name === data.name)
@@ -106,7 +95,7 @@ export default function ExitScenarios() {
     setIsDialogOpen(false)
   }
 
-  const handleDelete = (scenarioId) => {
+  const handleDelete = scenarioId => {
     if (confirm('Are you sure you want to remove this scenario?')) {
       if (selectedScenario?.id === scenarioId) {
         setSelectedScenario(null)
@@ -116,20 +105,23 @@ export default function ExitScenarios() {
   }
 
   // Quick scenario templates
-  const createQuickScenario = (multiplier) => {
-    const latestValuation = rounds.length > 0
-      ? rounds[rounds.length - 1].postMoneyValuation
-      : 10000000
+  const createQuickScenario = multiplier => {
+    const latestValuation =
+      rounds.length > 0 ? rounds[rounds.length - 1].postMoneyValuation : 10000000
 
     const exitVal = latestValuation * multiplier
-    const name = multiplier === 2 ? 'Modest Exit'
-      : multiplier === 5 ? 'Good Exit'
-      : multiplier === 10 ? 'Great Exit'
-      : 'Unicorn Exit'
+    const name =
+      multiplier === 2
+        ? 'Modest Exit'
+        : multiplier === 5
+          ? 'Good Exit'
+          : multiplier === 10
+            ? 'Great Exit'
+            : 'Unicorn Exit'
 
     addScenario({
       name,
-      exitValuation: exitVal
+      exitValuation: exitVal,
     })
   }
 
@@ -163,9 +155,7 @@ export default function ExitScenarios() {
                     <DialogTitle>
                       {editingScenario ? 'Edit Scenario' : 'Create Exit Scenario'}
                     </DialogTitle>
-                    <DialogDescription>
-                      Model an exit at a specific valuation
-                    </DialogDescription>
+                    <DialogDescription>Model an exit at a specific valuation</DialogDescription>
                   </DialogHeader>
 
                   <div className="space-y-4 py-4">
@@ -175,7 +165,7 @@ export default function ExitScenarios() {
                         id="scenario-name"
                         placeholder="e.g., Conservative Exit"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={e => setFormData({ ...formData, name: e.target.value })}
                       />
                     </div>
 
@@ -187,7 +177,7 @@ export default function ExitScenarios() {
                         min="0"
                         step="1000000"
                         value={formData.exitValuation}
-                        onChange={(e) => setFormData({ ...formData, exitValuation: e.target.value })}
+                        onChange={e => setFormData({ ...formData, exitValuation: e.target.value })}
                       />
                       <p className="text-xs text-muted-foreground">
                         Total company value at exit (acquisition or IPO)
@@ -199,7 +189,10 @@ export default function ExitScenarios() {
                     <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
                       Cancel
                     </Button>
-                    <Button onClick={handleSave} disabled={!formData.name || formData.exitValuation <= 0}>
+                    <Button
+                      onClick={handleSave}
+                      disabled={!formData.name || formData.exitValuation <= 0}
+                    >
                       {editingScenario ? 'Save Changes' : 'Create Scenario'}
                     </Button>
                   </DialogFooter>
@@ -235,9 +228,7 @@ export default function ExitScenarios() {
       <Card>
         <CardHeader>
           <CardTitle>Your Scenarios</CardTitle>
-          <CardDescription>
-            Select a scenario to view detailed waterfall analysis
-          </CardDescription>
+          <CardDescription>Select a scenario to view detailed waterfall analysis</CardDescription>
         </CardHeader>
         <CardContent>
           {scenarios.length > 0 ? (
@@ -262,7 +253,7 @@ export default function ExitScenarios() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation()
                         handleOpenDialog(scenario)
                       }}
@@ -272,7 +263,7 @@ export default function ExitScenarios() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={(e) => {
+                      onClick={e => {
                         e.stopPropagation()
                         handleDelete(scenario.id)
                       }}
@@ -327,9 +318,7 @@ export default function ExitScenarios() {
                     const round = rounds.find(r =>
                       r.leadInvestors?.some(inv => st.stakeholder.includes(inv))
                     )
-                    const moic = round
-                      ? calculateMOIC(st.total, round.investment)
-                      : null
+                    const moic = round ? calculateMOIC(st.total, round.investment) : null
 
                     return (
                       <TableRow key={index}>
@@ -337,9 +326,7 @@ export default function ExitScenarios() {
                         <TableCell>
                           <Badge variant="secondary">{st.type}</Badge>
                         </TableCell>
-                        <TableCell className="font-semibold">
-                          {formatCurrency(st.total)}
-                        </TableCell>
+                        <TableCell className="font-semibold">{formatCurrency(st.total)}</TableCell>
                         <TableCell>
                           {((st.total / selectedScenario.exitValuation) * 100).toFixed(2)}%
                         </TableCell>

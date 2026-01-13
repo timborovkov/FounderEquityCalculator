@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 
 export default function useKeyboardShortcuts(handlers) {
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = e => {
       const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0
       const modifier = isMac ? e.metaKey : e.ctrlKey
 

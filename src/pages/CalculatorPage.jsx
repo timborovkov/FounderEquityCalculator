@@ -16,7 +16,6 @@ import ShareDialog from '@/components/shared/ShareDialog'
 import useCalculatorStore from '@/store/useCalculatorStore'
 import useKeyboardShortcuts from '@/hooks/useKeyboardShortcuts'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { Card, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { loadSharedState } from '@/lib/utils/url-share'
 import {
   Dialog,
@@ -40,7 +39,7 @@ export default function CalculatorPage() {
   const { undo, redo, founders, rounds, employees, loadTemplate } = useCalculatorStore()
 
   // Handle section change from sidebar
-  const handleSectionChange = (sectionId) => {
+  const handleSectionChange = sectionId => {
     setActiveSection(sectionId)
     // Switch to table view when clicking sidebar items
     setActiveTab('table')
@@ -63,7 +62,7 @@ export default function CalculatorPage() {
     onSave: () => handleSave(),
     onUndo: () => undo(),
     onRedo: () => redo(),
-    onExport: (type) => handleExport(type),
+    onExport: type => handleExport(type),
   })
 
   const handleSave = () => {
@@ -76,7 +75,7 @@ export default function CalculatorPage() {
     setIsSaveLoadOpen(true)
   }
 
-  const handleExport = (type) => {
+  const handleExport = () => {
     setIsExportOpen(true)
   }
 
@@ -84,7 +83,7 @@ export default function CalculatorPage() {
     setIsShareOpen(true)
   }
 
-  const handleAddEvent = (eventType) => {
+  const handleAddEvent = eventType => {
     setIsAddEventOpen(false)
     setActiveTab('table')
     setActiveSection(eventType)
@@ -128,7 +127,11 @@ export default function CalculatorPage() {
           {/* Tabs for Timeline vs Details View */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="mb-8 flex items-center justify-center">
-              <TabsList className="inline-flex p-1 bg-muted/50 backdrop-blur-sm border-2 shadow-sm" role="tablist" aria-label="View selector">
+              <TabsList
+                className="inline-flex p-1 bg-muted/50 backdrop-blur-sm border-2 shadow-sm"
+                role="tablist"
+                aria-label="View selector"
+              >
                 <TabsTrigger
                   value="timeline"
                   aria-label="Switch to timeline view"
@@ -149,7 +152,7 @@ export default function CalculatorPage() {
             <TabsContent value="timeline" className="space-y-8">
               {/* Interactive Timeline */}
               <Timeline
-                onEventClick={(event) => {
+                onEventClick={event => {
                   // Navigate to the appropriate section based on event type
                   if (event.type === 'funding-round') {
                     setActiveTab('table')
@@ -219,14 +222,8 @@ export default function CalculatorPage() {
         onClose={() => setIsSaveLoadOpen(false)}
         mode={saveLoadMode}
       />
-      <ExportDialog
-        isOpen={isExportOpen}
-        onClose={() => setIsExportOpen(false)}
-      />
-      <ShareDialog
-        isOpen={isShareOpen}
-        onClose={() => setIsShareOpen(false)}
-      />
+      <ExportDialog isOpen={isExportOpen} onClose={() => setIsExportOpen(false)} />
+      <ShareDialog isOpen={isShareOpen} onClose={() => setIsShareOpen(false)} />
 
       {/* Add Event Dialog */}
       <Dialog open={isAddEventOpen} onOpenChange={setIsAddEventOpen}>
@@ -234,7 +231,7 @@ export default function CalculatorPage() {
           <DialogHeader>
             <DialogTitle>Add Event to Timeline</DialogTitle>
             <DialogDescription>
-              Choose what type of event you'd like to add to your timeline
+              Choose what type of event you&apos;d like to add to your timeline
             </DialogDescription>
           </DialogHeader>
           <div className="grid gap-3 py-4">
@@ -257,7 +254,9 @@ export default function CalculatorPage() {
               <Users className="mr-3 h-5 w-5 text-secondary-600" />
               <div className="text-left">
                 <div className="font-semibold">Founder</div>
-                <div className="text-sm text-muted-foreground">Add a founder with vesting schedule</div>
+                <div className="text-sm text-muted-foreground">
+                  Add a founder with vesting schedule
+                </div>
               </div>
             </Button>
             <Button

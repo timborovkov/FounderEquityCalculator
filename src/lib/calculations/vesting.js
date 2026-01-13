@@ -26,7 +26,7 @@ export function calculateVestedShares(
       unvestedShares: totalShares,
       percentVested: 0,
       monthsRemaining: vestingMonths - monthsSinceGrant,
-      cliffRemaining: cliffMonths - monthsSinceGrant
+      cliffRemaining: cliffMonths - monthsSinceGrant,
     }
   }
 
@@ -37,7 +37,7 @@ export function calculateVestedShares(
       unvestedShares: 0,
       percentVested: 100,
       monthsRemaining: 0,
-      cliffRemaining: 0
+      cliffRemaining: 0,
     }
   }
 
@@ -53,7 +53,7 @@ export function calculateVestedShares(
     unvestedShares,
     percentVested: vestedPercentage,
     monthsRemaining: vestingMonths - monthsSinceGrant,
-    cliffRemaining: 0
+    cliffRemaining: 0,
   }
 }
 
@@ -84,7 +84,7 @@ export function calculateVestingSchedule(
     shares: cliffShares,
     cumulativeShares: cliffShares,
     type: 'cliff',
-    percentVested: (cliffMonths / vestingMonths) * 100
+    percentVested: (cliffMonths / vestingMonths) * 100,
   })
 
   // Add quarterly milestones (every 3 months)
@@ -102,7 +102,7 @@ export function calculateVestingSchedule(
       shares,
       cumulativeShares,
       type: 'quarterly',
-      percentVested: (month / vestingMonths) * 100
+      percentVested: (month / vestingMonths) * 100,
     })
   }
 
@@ -119,7 +119,7 @@ export function calculateVestingSchedule(
       shares,
       cumulativeShares: totalShares,
       type: 'final',
-      percentVested: 100
+      percentVested: 100,
     })
   }
 
@@ -133,7 +133,7 @@ export function calculateVestingSchedule(
  * @param {Date} currentDate - Current date
  * @returns {Object} - Updated founder with vested/unvested breakdown
  */
-export function handleFounderDeparture(founder, departureDate, currentDate) {
+export function handleFounderDeparture(founder, departureDate, _currentDate) {
   const vesting = calculateVestedShares(
     founder.vestingStart,
     departureDate,
@@ -149,7 +149,7 @@ export function handleFounderDeparture(founder, departureDate, currentDate) {
     vestedShares: vesting.vestedShares,
     unvestedShares: vesting.unvestedShares,
     // Unvested shares return to company
-    forfeited: vesting.unvestedShares
+    forfeited: vesting.unvestedShares,
   }
 }
 
@@ -182,7 +182,7 @@ export function calculateTotalVestedOptions(employees, currentDate) {
     totalGranted,
     totalVested,
     totalUnvested,
-    percentVested: totalGranted > 0 ? (totalVested / totalGranted) * 100 : 0
+    percentVested: totalGranted > 0 ? (totalVested / totalGranted) * 100 : 0,
   }
 }
 
@@ -203,11 +203,7 @@ export function calculateMonthlyVestingRate(totalShares, vestingMonths) {
  * @param {number} accelerationPercentage - Percentage of unvested to accelerate (0-100)
  * @returns {Object} - Accelerated vesting calculation
  */
-export function calculateAcceleration(
-  stakeholder,
-  exitDate,
-  accelerationPercentage = 100
-) {
+export function calculateAcceleration(stakeholder, exitDate, accelerationPercentage = 100) {
   const currentVesting = calculateVestedShares(
     stakeholder.grantDate || stakeholder.vestingStart,
     exitDate,
@@ -224,6 +220,6 @@ export function calculateAcceleration(
     ...currentVesting,
     acceleratedShares,
     totalVestedWithAcceleration: currentVesting.vestedShares + acceleratedShares,
-    remainingUnvested: currentVesting.unvestedShares - acceleratedShares
+    remainingUnvested: currentVesting.unvestedShares - acceleratedShares,
   }
 }

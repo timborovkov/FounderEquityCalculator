@@ -4,7 +4,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
 import { Progress } from '@/components/ui/progress'
@@ -30,7 +29,15 @@ import { DEFAULT_VESTING } from '@/data/constants'
 import { calculateVestedShares } from '@/lib/calculations/vesting'
 
 export default function OptionPool() {
-  const { company, optionPool, setOptionPool, employees, addEmployee, updateEmployee, removeEmployee } = useCalculatorStore()
+  const {
+    company,
+    optionPool,
+    setOptionPool,
+    employees,
+    addEmployee,
+    updateEmployee,
+    removeEmployee,
+  } = useCalculatorStore()
   const [editingEmployee, setEditingEmployee] = useState(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -42,7 +49,7 @@ export default function OptionPool() {
     grantDate: new Date().toISOString().split('T')[0],
     strikePrice: 0,
     cliffMonths: DEFAULT_VESTING.cliffMonths,
-    vestingMonths: DEFAULT_VESTING.vestingMonths
+    vestingMonths: DEFAULT_VESTING.vestingMonths,
   })
 
   // Calculate pool utilization
@@ -55,7 +62,7 @@ export default function OptionPool() {
       size: optionPool.size,
       allocated,
       available,
-      utilizationPercent
+      utilizationPercent,
     }
   }, [employees, optionPool.size])
 
@@ -74,7 +81,7 @@ export default function OptionPool() {
         ...emp,
         vested: vesting.vestedShares,
         unvested: vesting.unvestedShares,
-        percentVested: vesting.percentVested
+        percentVested: vesting.percentVested,
       }
     })
   }, [employees, company.currentDate])
@@ -88,7 +95,7 @@ export default function OptionPool() {
         grantDate: new Date(employee.grantDate).toISOString().split('T')[0],
         strikePrice: employee.strikePrice,
         cliffMonths: employee.cliffMonths,
-        vestingMonths: employee.vestingMonths
+        vestingMonths: employee.vestingMonths,
       })
       setEditingEmployee(employee.id)
     } else {
@@ -99,7 +106,7 @@ export default function OptionPool() {
         grantDate: new Date().toISOString().split('T')[0],
         strikePrice: 0,
         cliffMonths: DEFAULT_VESTING.cliffMonths,
-        vestingMonths: DEFAULT_VESTING.vestingMonths
+        vestingMonths: DEFAULT_VESTING.vestingMonths,
       })
       setEditingEmployee(null)
     }
@@ -111,7 +118,7 @@ export default function OptionPool() {
       ...formData,
       grantDate: new Date(formData.grantDate),
       optionsGranted: parseFloat(formData.optionsGranted),
-      strikePrice: parseFloat(formData.strikePrice)
+      strikePrice: parseFloat(formData.strikePrice),
     }
 
     if (editingEmployee) {
@@ -123,13 +130,13 @@ export default function OptionPool() {
     setIsDialogOpen(false)
   }
 
-  const handleDelete = (employeeId) => {
+  const handleDelete = employeeId => {
     if (confirm('Are you sure you want to remove this employee grant?')) {
       removeEmployee(employeeId)
     }
   }
 
-  const formatNumber = (num) => {
+  const formatNumber = num => {
     return new Intl.NumberFormat('en-US').format(Math.round(num))
   }
 
@@ -144,9 +151,7 @@ export default function OptionPool() {
                 <Briefcase className="w-5 h-5 text-primary-600" />
                 <CardTitle>Option Pool Size</CardTitle>
               </div>
-              <CardDescription>
-                Total equity reserved for employee grants
-              </CardDescription>
+              <CardDescription>Total equity reserved for employee grants</CardDescription>
             </div>
           </div>
         </CardHeader>
@@ -162,18 +167,14 @@ export default function OptionPool() {
                 max="30"
                 step="0.1"
                 value={optionPool.size}
-                onChange={(e) => setOptionPool({ size: parseFloat(e.target.value) })}
+                onChange={e => setOptionPool({ size: parseFloat(e.target.value) })}
               />
-              <p className="text-xs text-muted-foreground">
-                Typically 10-20% for startups
-              </p>
+              <p className="text-xs text-muted-foreground">Typically 10-20% for startups</p>
             </div>
 
             <div className="space-y-2">
               <div className="text-sm text-muted-foreground">Current Pool Size</div>
-              <div className="text-3xl font-bold text-primary-600">
-                {optionPool.size}%
-              </div>
+              <div className="text-3xl font-bold text-primary-600">{optionPool.size}%</div>
             </div>
           </div>
 
@@ -193,9 +194,7 @@ export default function OptionPool() {
       <Card>
         <CardHeader>
           <CardTitle>Pool Utilization</CardTitle>
-          <CardDescription>
-            How much of the option pool has been allocated
-          </CardDescription>
+          <CardDescription>How much of the option pool has been allocated</CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-4">
@@ -233,8 +232,8 @@ export default function OptionPool() {
             <Alert>
               <AlertCircle className="w-4 h-4" />
               <AlertDescription>
-                Option pool is {poolStats.utilizationPercent.toFixed(0)}% utilized.
-                Consider refreshing the pool in your next funding round.
+                Option pool is {poolStats.utilizationPercent.toFixed(0)}% utilized. Consider
+                refreshing the pool in your next funding round.
               </AlertDescription>
             </Alert>
           )}
@@ -247,9 +246,7 @@ export default function OptionPool() {
           <div className="flex items-center justify-between">
             <div>
               <CardTitle>Employee Grants</CardTitle>
-              <CardDescription>
-                Individual option grants with vesting schedules
-              </CardDescription>
+              <CardDescription>Individual option grants with vesting schedules</CardDescription>
             </div>
 
             <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -265,9 +262,7 @@ export default function OptionPool() {
                   <DialogTitle>
                     {editingEmployee ? 'Edit Employee Grant' : 'Add Employee Grant'}
                   </DialogTitle>
-                  <DialogDescription>
-                    Configure option grant and vesting schedule
-                  </DialogDescription>
+                  <DialogDescription>Configure option grant and vesting schedule</DialogDescription>
                 </DialogHeader>
 
                 <div className="space-y-6 py-4">
@@ -279,7 +274,7 @@ export default function OptionPool() {
                         id="emp-name"
                         placeholder="e.g., John Doe"
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        onChange={e => setFormData({ ...formData, name: e.target.value })}
                       />
                     </div>
 
@@ -289,7 +284,7 @@ export default function OptionPool() {
                         id="emp-role"
                         placeholder="e.g., Engineering Lead"
                         value={formData.role}
-                        onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                        onChange={e => setFormData({ ...formData, role: e.target.value })}
                       />
                     </div>
                   </div>
@@ -305,7 +300,7 @@ export default function OptionPool() {
                         type="number"
                         min="0"
                         value={formData.optionsGranted}
-                        onChange={(e) => setFormData({ ...formData, optionsGranted: e.target.value })}
+                        onChange={e => setFormData({ ...formData, optionsGranted: e.target.value })}
                       />
                     </div>
 
@@ -315,7 +310,7 @@ export default function OptionPool() {
                         id="grant-date"
                         type="date"
                         value={formData.grantDate}
-                        onChange={(e) => setFormData({ ...formData, grantDate: e.target.value })}
+                        onChange={e => setFormData({ ...formData, grantDate: e.target.value })}
                       />
                     </div>
 
@@ -327,7 +322,7 @@ export default function OptionPool() {
                         min="0"
                         step="0.01"
                         value={formData.strikePrice}
-                        onChange={(e) => setFormData({ ...formData, strikePrice: e.target.value })}
+                        onChange={e => setFormData({ ...formData, strikePrice: e.target.value })}
                       />
                     </div>
                   </div>
@@ -347,7 +342,9 @@ export default function OptionPool() {
                           min="0"
                           max="48"
                           value={formData.cliffMonths}
-                          onChange={(e) => setFormData({ ...formData, cliffMonths: parseInt(e.target.value) })}
+                          onChange={e =>
+                            setFormData({ ...formData, cliffMonths: parseInt(e.target.value) })
+                          }
                         />
                       </div>
 
@@ -359,7 +356,9 @@ export default function OptionPool() {
                           min="0"
                           max="120"
                           value={formData.vestingMonths}
-                          onChange={(e) => setFormData({ ...formData, vestingMonths: parseInt(e.target.value) })}
+                          onChange={e =>
+                            setFormData({ ...formData, vestingMonths: parseInt(e.target.value) })
+                          }
                         />
                       </div>
                     </div>
@@ -370,7 +369,10 @@ export default function OptionPool() {
                   <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
                     Cancel
                   </Button>
-                  <Button onClick={handleSave} disabled={!formData.name || formData.optionsGranted <= 0}>
+                  <Button
+                    onClick={handleSave}
+                    disabled={!formData.name || formData.optionsGranted <= 0}
+                  >
                     {editingEmployee ? 'Save Changes' : 'Add Grant'}
                   </Button>
                 </DialogFooter>
@@ -396,7 +398,9 @@ export default function OptionPool() {
                 {employeesWithVesting.map(emp => (
                   <TableRow key={emp.id}>
                     <TableCell className="font-medium">{emp.name}</TableCell>
-                    <TableCell className="text-sm text-muted-foreground">{emp.role || '-'}</TableCell>
+                    <TableCell className="text-sm text-muted-foreground">
+                      {emp.role || '-'}
+                    </TableCell>
                     <TableCell>{formatNumber(emp.optionsGranted)}</TableCell>
                     <TableCell>
                       <div className="space-y-1">
@@ -413,18 +417,10 @@ export default function OptionPool() {
                     </TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-1">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleOpenDialog(emp)}
-                        >
+                        <Button variant="ghost" size="sm" onClick={() => handleOpenDialog(emp)}>
                           <Edit2 className="w-4 h-4" />
                         </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDelete(emp.id)}
-                        >
+                        <Button variant="ghost" size="sm" onClick={() => handleDelete(emp.id)}>
                           <Trash2 className="w-4 h-4" />
                         </Button>
                       </div>
@@ -437,7 +433,7 @@ export default function OptionPool() {
             <div className="text-center py-12 text-muted-foreground">
               <Briefcase className="w-12 h-12 mx-auto mb-4 opacity-50" />
               <p className="text-sm">No employee grants yet</p>
-              <p className="text-xs">Click "Add Grant" to allocate options</p>
+              <p className="text-xs">Click &quot;Add Grant&quot; to allocate options</p>
             </div>
           )}
         </CardContent>

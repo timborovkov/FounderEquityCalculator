@@ -1,5 +1,5 @@
 import { AlertTriangle, Info, AlertCircle } from 'lucide-react'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import useCalculatorStore from '@/store/useCalculatorStore'
@@ -13,7 +13,7 @@ export default function WarningsPanel() {
     return null
   }
 
-  const getIcon = (severity) => {
+  const getIcon = severity => {
     switch (severity) {
       case 'high':
         return <AlertCircle className="w-4 h-4" />
@@ -25,19 +25,7 @@ export default function WarningsPanel() {
     }
   }
 
-  const getVariant = (severity) => {
-    switch (severity) {
-      case 'high':
-        return 'destructive'
-      case 'medium':
-        return 'warning'
-      case 'low':
-      default:
-        return 'default'
-    }
-  }
-
-  const getSeverityColor = (severity) => {
+  const getSeverityColor = severity => {
     switch (severity) {
       case 'high':
         return 'destructive'
@@ -64,13 +52,15 @@ export default function WarningsPanel() {
         {warnings.map((warning, index) => (
           <Alert key={index} className="relative">
             <div className="flex items-start gap-3">
-              <div className="mt-0.5">
-                {getIcon(warning.severity)}
-              </div>
+              <div className="mt-0.5">{getIcon(warning.severity)}</div>
               <div className="flex-1 space-y-2">
                 <div className="flex items-center gap-2">
                   <Badge variant={getSeverityColor(warning.severity)} className="text-xs">
-                    {warning.severity === 'high' ? 'Important' : warning.severity === 'medium' ? 'Warning' : 'Info'}
+                    {warning.severity === 'high'
+                      ? 'Important'
+                      : warning.severity === 'medium'
+                        ? 'Warning'
+                        : 'Info'}
                   </Badge>
                   {warning.source && warning.source !== 'general' && (
                     <span className="text-xs text-muted-foreground">
@@ -78,9 +68,7 @@ export default function WarningsPanel() {
                     </span>
                   )}
                 </div>
-                <AlertDescription className="text-sm">
-                  {warning.message}
-                </AlertDescription>
+                <AlertDescription className="text-sm">{warning.message}</AlertDescription>
                 {warning.suggestion && (
                   <div className="text-xs text-muted-foreground bg-muted p-2 rounded">
                     <strong>Suggestion:</strong> {warning.suggestion}

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { PieChart, Download, TrendingDown, TrendingUp } from 'lucide-react'
+import { PieChart, Download } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -11,13 +11,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
 import useCalculatorStore from '@/store/useCalculatorStore'
 import { calculateCurrentOwnership } from '@/lib/calculations/dilution'
 import { calculateVestedShares } from '@/lib/calculations/vesting'
@@ -40,7 +33,7 @@ export default function CapTable() {
       )
       return {
         ...emp,
-        vestedShares: vesting.vestedShares
+        vestedShares: vesting.vestedShares,
       }
     })
 
@@ -60,7 +53,7 @@ export default function CapTable() {
     const founderTotal = founderRows.reduce((sum, s) => sum + s.ownership, 0)
     const investorTotal = investorRows.reduce((sum, s) => sum + s.ownership, 0)
     const employeeTotal = employeeRows.reduce((sum, s) => sum + s.ownership, 0)
-    const optionPoolRemaining = optionPool.size - (optionPool.allocated / totalShares * 100)
+    const optionPoolRemaining = optionPool.size - (optionPool.allocated / totalShares) * 100
 
     return {
       stakeholders,
@@ -71,27 +64,26 @@ export default function CapTable() {
         founders: founderTotal,
         investors: investorTotal,
         employees: employeeTotal,
-        optionPool: optionPoolRemaining
+        optionPool: optionPoolRemaining,
       },
-      totalShares
+      totalShares,
     }
   }, [founders, rounds, employees, optionPool, company.currentDate])
 
-  const formatNumber = (num) => {
+  const formatNumber = num => {
     return new Intl.NumberFormat('en-US').format(Math.round(num))
-  }
-
-  const formatCurrency = (amount) => {
-    if (amount >= 1e9) return `$${(amount / 1e9).toFixed(2)}B`
-    if (amount >= 1e6) return `$${(amount / 1e6).toFixed(2)}M`
-    if (amount >= 1e3) return `$${(amount / 1e3).toFixed(0)}K`
-    return `$${amount.toFixed(0)}`
   }
 
   const handleExport = async () => {
     setIsExporting(true)
     try {
-      await exportCapTableToCSV(founders, rounds, employees, optionPool, company.currentDate || new Date())
+      await exportCapTableToCSV(
+        founders,
+        rounds,
+        employees,
+        optionPool,
+        company.currentDate || new Date()
+      )
     } catch (error) {
       console.error('Failed to export cap table:', error)
       alert('Failed to export cap table. Please try again.')
@@ -109,9 +101,7 @@ export default function CapTable() {
               <PieChart className="w-5 h-5 text-primary-600" />
               <CardTitle>Cap Table</CardTitle>
             </div>
-            <CardDescription>
-              Real-time ownership breakdown for all stakeholders
-            </CardDescription>
+            <CardDescription>Real-time ownership breakdown for all stakeholders</CardDescription>
           </div>
 
           <Button variant="outline" onClick={handleExport} disabled={isExporting}>
@@ -210,9 +200,7 @@ export default function CapTable() {
                   <TableCell>Total Founders</TableCell>
                   <TableCell></TableCell>
                   <TableCell>
-                    <Badge className="bg-primary-600">
-                      {capTable.totals.founders.toFixed(2)}%
-                    </Badge>
+                    <Badge className="bg-primary-600">{capTable.totals.founders.toFixed(2)}%</Badge>
                   </TableCell>
                   <TableCell></TableCell>
                 </TableRow>
@@ -292,9 +280,7 @@ export default function CapTable() {
                       {formatNumber(stakeholder.shares)}
                     </TableCell>
                     <TableCell>
-                      <Badge className="bg-success-600">
-                        {stakeholder.ownership.toFixed(2)}%
-                      </Badge>
+                      <Badge className="bg-success-600">{stakeholder.ownership.toFixed(2)}%</Badge>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -321,9 +307,7 @@ export default function CapTable() {
                 Unallocated options available for future grants
               </div>
             </div>
-            <div className="text-2xl font-bold">
-              {capTable.totals.optionPool.toFixed(2)}%
-            </div>
+            <div className="text-2xl font-bold">{capTable.totals.optionPool.toFixed(2)}%</div>
           </div>
         </div>
 

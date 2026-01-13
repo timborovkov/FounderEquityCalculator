@@ -1,4 +1,11 @@
-import { TrendingUp, TrendingDown, AlertTriangle, CheckCircle2, PieChart, Users } from 'lucide-react'
+import {
+  TrendingUp,
+  TrendingDown,
+  AlertTriangle,
+  CheckCircle2,
+  PieChart,
+  Users,
+} from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
@@ -14,9 +21,7 @@ export default function SummaryPanel() {
   const summary = useMemo(() => {
     const totalRounds = rounds.length
     const totalRaised = rounds.reduce((sum, r) => sum + r.investment, 0)
-    const latestValuation = rounds.length > 0
-      ? rounds[rounds.length - 1].postMoneyValuation
-      : 0
+    const latestValuation = rounds.length > 0 ? rounds[rounds.length - 1].postMoneyValuation : 0
 
     // Calculate ownership breakdown
     const { stakeholders } = calculateCurrentOwnership(founders, rounds, employees)
@@ -29,9 +34,7 @@ export default function SummaryPanel() {
       .reduce((sum, s) => sum + s.ownership, 0)
 
     // Calculate total dilution
-    const totalDilution = rounds.length > 0
-      ? calculateTotalDilution(rounds)
-      : 0
+    const totalDilution = rounds.length > 0 ? calculateTotalDilution(rounds) : 0
 
     // Warnings
     const warnings = []
@@ -41,10 +44,12 @@ export default function SummaryPanel() {
     if (optionPool.size < 10) {
       warnings.push('Small option pool (<10%)')
     }
-    if (rounds.some(r => {
-      const dilution = (r.investment / r.postMoneyValuation) * 100
-      return dilution > 40
-    })) {
+    if (
+      rounds.some(r => {
+        const dilution = (r.investment / r.postMoneyValuation) * 100
+        return dilution > 40
+      })
+    ) {
       warnings.push('High dilution in single round (>40%)')
     }
 
@@ -55,11 +60,11 @@ export default function SummaryPanel() {
       founderOwnership,
       investorOwnership,
       totalDilution,
-      warnings
+      warnings,
     }
   }, [founders, rounds, employees, optionPool])
 
-  const formatCurrency = (amount) => {
+  const formatCurrency = amount => {
     if (amount >= 1e9) return `$${(amount / 1e9).toFixed(1)}B`
     if (amount >= 1e6) return `$${(amount / 1e6).toFixed(1)}M`
     if (amount >= 1e3) return `$${(amount / 1e3).toFixed(1)}K`
@@ -74,9 +79,7 @@ export default function SummaryPanel() {
           <h2 className="text-lg font-bold mb-1 text-primary-900 dark:text-primary-100">
             {company.name || 'Your Company'}
           </h2>
-          <p className="text-sm text-primary-600 dark:text-primary-400">
-            Summary & Insights
-          </p>
+          <p className="text-sm text-primary-600 dark:text-primary-400">Summary & Insights</p>
         </div>
 
         <Separator className="bg-border/50" />
@@ -91,7 +94,9 @@ export default function SummaryPanel() {
           </CardHeader>
           <CardContent className="space-y-4 pt-4">
             <div className="p-3 bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-950 dark:to-secondary-950 rounded-lg border border-primary-100 dark:border-primary-900">
-              <div className="text-xs text-primary-600 dark:text-primary-400 mb-1 font-medium">Current Valuation</div>
+              <div className="text-xs text-primary-600 dark:text-primary-400 mb-1 font-medium">
+                Current Valuation
+              </div>
               <div className="text-2xl font-bold text-primary-900 dark:text-primary-100">
                 {formatCurrency(summary.latestValuation)}
               </div>
@@ -102,15 +107,11 @@ export default function SummaryPanel() {
             <div className="grid grid-cols-2 gap-3">
               <div className="p-2.5 bg-muted/50 rounded-lg border">
                 <div className="text-xs text-muted-foreground mb-1">Total Raised</div>
-                <div className="text-base font-semibold">
-                  {formatCurrency(summary.totalRaised)}
-                </div>
+                <div className="text-base font-semibold">{formatCurrency(summary.totalRaised)}</div>
               </div>
               <div className="p-2.5 bg-muted/50 rounded-lg border">
                 <div className="text-xs text-muted-foreground mb-1">Rounds</div>
-                <div className="text-base font-semibold">
-                  {summary.totalRounds}
-                </div>
+                <div className="text-base font-semibold">{summary.totalRounds}</div>
               </div>
             </div>
           </CardContent>
@@ -156,9 +157,7 @@ export default function SummaryPanel() {
 
             <div className="flex items-center justify-between">
               <span className="text-sm text-muted-foreground">Option Pool</span>
-              <span className="font-semibold">
-                {optionPool.size}%
-              </span>
+              <span className="font-semibold">{optionPool.size}%</span>
             </div>
           </CardContent>
         </Card>
@@ -176,9 +175,7 @@ export default function SummaryPanel() {
               <div className="space-y-2">
                 {summary.warnings.map((warning, index) => (
                   <Alert key={index} variant="warning" className="py-2">
-                    <AlertDescription className="text-xs">
-                      {warning}
-                    </AlertDescription>
+                    <AlertDescription className="text-xs">{warning}</AlertDescription>
                   </Alert>
                 ))}
               </div>
@@ -195,7 +192,9 @@ export default function SummaryPanel() {
                   <CheckCircle2 className="w-6 h-6 text-success-600 dark:text-success-400" />
                 </div>
                 <div>
-                  <div className="font-semibold text-success-700 dark:text-success-300">Looking Good!</div>
+                  <div className="font-semibold text-success-700 dark:text-success-300">
+                    Looking Good!
+                  </div>
                   <div className="text-xs text-success-600 dark:text-success-400">
                     No major issues detected
                   </div>
@@ -216,14 +215,20 @@ export default function SummaryPanel() {
           <CardContent className="space-y-2.5 pt-4 text-sm">
             <div className="flex justify-between items-center p-2 bg-muted/30 rounded-lg">
               <span className="text-muted-foreground">Founders</span>
-              <Badge variant="secondary" className="font-semibold">{founders.length}</Badge>
+              <Badge variant="secondary" className="font-semibold">
+                {founders.length}
+              </Badge>
             </div>
             <div className="flex justify-between items-center p-2 bg-muted/30 rounded-lg">
               <span className="text-muted-foreground">Employees</span>
-              <Badge variant="secondary" className="font-semibold">{employees.length}</Badge>
+              <Badge variant="secondary" className="font-semibold">
+                {employees.length}
+              </Badge>
             </div>
             <div className="flex justify-between items-center p-2 bg-primary-50 dark:bg-primary-950 rounded-lg border border-primary-100 dark:border-primary-900">
-              <span className="text-primary-700 dark:text-primary-300 font-medium">Total Stakeholders</span>
+              <span className="text-primary-700 dark:text-primary-300 font-medium">
+                Total Stakeholders
+              </span>
               <Badge className="bg-primary-600 text-white font-semibold">
                 {founders.length + rounds.length + employees.length}
               </Badge>

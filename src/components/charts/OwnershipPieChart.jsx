@@ -8,7 +8,7 @@ const COLORS = {
   founder: '#0ea5e9', // primary-500
   investor: '#a855f7', // secondary-500
   employee: '#10b981', // success-500
-  pool: '#94a3b8' // muted
+  pool: '#94a3b8', // muted
 }
 
 export default function OwnershipPieChart() {
@@ -38,7 +38,7 @@ export default function OwnershipPieChart() {
       data.push({
         name: 'Founders',
         value: founderOwnership,
-        color: COLORS.founder
+        color: COLORS.founder,
       })
     }
 
@@ -46,7 +46,7 @@ export default function OwnershipPieChart() {
       data.push({
         name: 'Investors',
         value: investorOwnership,
-        color: COLORS.investor
+        color: COLORS.investor,
       })
     }
 
@@ -54,7 +54,7 @@ export default function OwnershipPieChart() {
       data.push({
         name: 'Employees',
         value: employeeOwnership,
-        color: COLORS.employee
+        color: COLORS.employee,
       })
     }
 
@@ -62,7 +62,7 @@ export default function OwnershipPieChart() {
       data.push({
         name: 'Option Pool',
         value: poolRemaining,
-        color: COLORS.pool
+        color: COLORS.pool,
       })
     }
 
@@ -74,9 +74,7 @@ export default function OwnershipPieChart() {
       return (
         <div className="bg-background border rounded-lg p-3 shadow-lg">
           <p className="font-semibold">{payload[0].name}</p>
-          <p className="text-sm text-muted-foreground">
-            {payload[0].value.toFixed(2)}%
-          </p>
+          <p className="text-sm text-muted-foreground">{payload[0].value.toFixed(2)}%</p>
         </div>
       )
     }

@@ -37,7 +37,7 @@ export default function TemplateSelector({ trigger, onTemplateLoaded }) {
     }
   }
 
-  const getTemplateStats = (key) => {
+  const getTemplateStats = key => {
     const data = loadTemplate(key)
     return {
       founders: data.founders.length,
@@ -64,12 +64,13 @@ export default function TemplateSelector({ trigger, onTemplateLoaded }) {
             Start from a Template
           </DialogTitle>
           <DialogDescription>
-            Choose a pre-configured scenario to get started quickly. You can customize everything after loading.
+            Choose a pre-configured scenario to get started quickly. You can customize everything
+            after loading.
           </DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
-          {templates.map((template) => {
+          {templates.map(template => {
             const stats = getTemplateStats(template.key)
             const isSelected = selectedTemplate === template.key
 
@@ -87,9 +88,7 @@ export default function TemplateSelector({ trigger, onTemplateLoaded }) {
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <CardTitle className="text-lg">{template.name}</CardTitle>
-                      <CardDescription className="mt-1">
-                        {template.description}
-                      </CardDescription>
+                      <CardDescription className="mt-1">{template.description}</CardDescription>
                     </div>
                     {isSelected && (
                       <Check className="w-5 h-5 text-primary-600 flex-shrink-0 ml-2" />

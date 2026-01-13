@@ -50,10 +50,10 @@ export default function FundingRounds() {
     leadInvestors: '',
     liquidationPreference: 1,
     participating: false,
-    proRataRights: true
+    proRataRights: true,
   })
 
-  const formatCurrency = (amount) => {
+  const formatCurrency = amount => {
     if (amount >= 1e9) return `$${(amount / 1e9).toFixed(2)}B`
     if (amount >= 1e6) return `$${(amount / 1e6).toFixed(2)}M`
     if (amount >= 1e3) return `$${(amount / 1e3).toFixed(0)}K`
@@ -70,7 +70,7 @@ export default function FundingRounds() {
         leadInvestors: round.leadInvestors?.join(', ') || '',
         liquidationPreference: round.liquidationPreference,
         participating: round.participating,
-        proRataRights: round.proRataRights
+        proRataRights: round.proRataRights,
       })
       setEditingRound(round.id)
     } else {
@@ -82,7 +82,7 @@ export default function FundingRounds() {
         leadInvestors: '',
         liquidationPreference: 1,
         participating: false,
-        proRataRights: true
+        proRataRights: true,
       })
       setEditingRound(null)
     }
@@ -96,7 +96,10 @@ export default function FundingRounds() {
       preMoneyValuation: parseFloat(formData.preMoneyValuation),
       investment: parseFloat(formData.investment),
       postMoneyValuation: parseFloat(formData.preMoneyValuation) + parseFloat(formData.investment),
-      leadInvestors: formData.leadInvestors.split(',').map(s => s.trim()).filter(Boolean)
+      leadInvestors: formData.leadInvestors
+        .split(',')
+        .map(s => s.trim())
+        .filter(Boolean),
     }
 
     if (editingRound) {
@@ -108,7 +111,7 @@ export default function FundingRounds() {
     setIsDialogOpen(false)
   }
 
-  const handleDelete = (roundId) => {
+  const handleDelete = roundId => {
     if (confirm('Are you sure you want to remove this funding round?')) {
       removeRound(roundId)
     }
@@ -126,17 +129,18 @@ export default function FundingRounds() {
     return {
       ...round,
       dilution: dilution.dilutionPercentage,
-      hasWarning: dilution.dilutionPercentage > 40
+      hasWarning: dilution.dilutionPercentage > 40,
     }
   })
 
   const totalRaised = rounds.reduce((sum, r) => sum + r.investment, 0)
 
-  const postMoney = formData.preMoneyValuation ?
-    parseFloat(formData.preMoneyValuation) + parseFloat(formData.investment || 0) : 0
+  const postMoney = formData.preMoneyValuation
+    ? parseFloat(formData.preMoneyValuation) + parseFloat(formData.investment || 0)
+    : 0
 
-  const investorOwnership = postMoney > 0 ?
-    ((formData.investment || 0) / postMoney * 100).toFixed(1) : 0
+  const investorOwnership =
+    postMoney > 0 ? (((formData.investment || 0) / postMoney) * 100).toFixed(1) : 0
 
   return (
     <Card>
@@ -147,9 +151,7 @@ export default function FundingRounds() {
               <TrendingUp className="w-5 h-5 text-primary-600" />
               <CardTitle>Funding Rounds</CardTitle>
             </div>
-            <CardDescription>
-              Model your fundraising journey and track dilution
-            </CardDescription>
+            <CardDescription>Model your fundraising journey and track dilution</CardDescription>
           </div>
 
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -179,7 +181,7 @@ export default function FundingRounds() {
                       id="round-date"
                       type="date"
                       value={formData.date}
-                      onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                      onChange={e => setFormData({ ...formData, date: e.target.value })}
                     />
                   </div>
 
@@ -187,7 +189,7 @@ export default function FundingRounds() {
                     <Label htmlFor="round-type">Round Type *</Label>
                     <Select
                       value={formData.type}
-                      onValueChange={(value) => setFormData({ ...formData, type: value })}
+                      onValueChange={value => setFormData({ ...formData, type: value })}
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -218,7 +220,9 @@ export default function FundingRounds() {
                         min="0"
                         step="1000000"
                         value={formData.preMoneyValuation}
-                        onChange={(e) => setFormData({ ...formData, preMoneyValuation: e.target.value })}
+                        onChange={e =>
+                          setFormData({ ...formData, preMoneyValuation: e.target.value })
+                        }
                       />
                       <p className="text-xs text-muted-foreground">
                         Company value before investment
@@ -233,11 +237,9 @@ export default function FundingRounds() {
                         min="0"
                         step="100000"
                         value={formData.investment}
-                        onChange={(e) => setFormData({ ...formData, investment: e.target.value })}
+                        onChange={e => setFormData({ ...formData, investment: e.target.value })}
                       />
-                      <p className="text-xs text-muted-foreground">
-                        Amount being invested
-                      </p>
+                      <p className="text-xs text-muted-foreground">Amount being invested</p>
                     </div>
                   </div>
 
@@ -265,7 +267,7 @@ export default function FundingRounds() {
                     id="investors"
                     placeholder="e.g., Acme Ventures, ABC Capital"
                     value={formData.leadInvestors}
-                    onChange={(e) => setFormData({ ...formData, leadInvestors: e.target.value })}
+                    onChange={e => setFormData({ ...formData, leadInvestors: e.target.value })}
                   />
                   <p className="text-xs text-muted-foreground">
                     Separate multiple investors with commas
@@ -282,7 +284,9 @@ export default function FundingRounds() {
                     <Label htmlFor="liq-pref">Liquidation Preference</Label>
                     <Select
                       value={formData.liquidationPreference.toString()}
-                      onValueChange={(value) => setFormData({ ...formData, liquidationPreference: parseInt(value) })}
+                      onValueChange={value =>
+                        setFormData({ ...formData, liquidationPreference: parseInt(value) })
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -308,7 +312,9 @@ export default function FundingRounds() {
                     <Switch
                       id="participating"
                       checked={formData.participating}
-                      onCheckedChange={(checked) => setFormData({ ...formData, participating: checked })}
+                      onCheckedChange={checked =>
+                        setFormData({ ...formData, participating: checked })
+                      }
                     />
                   </div>
 
@@ -322,7 +328,9 @@ export default function FundingRounds() {
                     <Switch
                       id="pro-rata"
                       checked={formData.proRataRights}
-                      onCheckedChange={(checked) => setFormData({ ...formData, proRataRights: checked })}
+                      onCheckedChange={checked =>
+                        setFormData({ ...formData, proRataRights: checked })
+                      }
                     />
                   </div>
                 </div>
@@ -390,15 +398,15 @@ export default function FundingRounds() {
                     {new Date(round.date).toLocaleDateString()}
                   </TableCell>
                   <TableCell>
-                    <Badge style={{
-                      backgroundColor: ROUND_TYPES.find(t => t.value === round.type)?.color
-                    }}>
+                    <Badge
+                      style={{
+                        backgroundColor: ROUND_TYPES.find(t => t.value === round.type)?.color,
+                      }}
+                    >
                       {ROUND_TYPES.find(t => t.value === round.type)?.label}
                     </Badge>
                   </TableCell>
-                  <TableCell className="font-medium">
-                    {formatCurrency(round.investment)}
-                  </TableCell>
+                  <TableCell className="font-medium">{formatCurrency(round.investment)}</TableCell>
                   <TableCell className="text-sm text-muted-foreground">
                     {formatCurrency(round.postMoneyValuation)}
                   </TableCell>
@@ -407,9 +415,7 @@ export default function FundingRounds() {
                       <Badge variant={round.hasWarning ? 'destructive' : 'secondary'}>
                         {round.dilution.toFixed(1)}%
                       </Badge>
-                      {round.hasWarning && (
-                        <AlertTriangle className="w-4 h-4 text-warning-500" />
-                      )}
+                      {round.hasWarning && <AlertTriangle className="w-4 h-4 text-warning-500" />}
                     </div>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground max-w-[200px] truncate">
@@ -417,18 +423,10 @@ export default function FundingRounds() {
                   </TableCell>
                   <TableCell className="text-right">
                     <div className="flex justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleOpenDialog(round)}
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => handleOpenDialog(round)}>
                         <Edit2 className="w-4 h-4" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(round.id)}
-                      >
+                      <Button variant="ghost" size="sm" onClick={() => handleDelete(round.id)}>
                         <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
@@ -441,7 +439,7 @@ export default function FundingRounds() {
           <div className="text-center py-12 text-muted-foreground">
             <TrendingUp className="w-12 h-12 mx-auto mb-4 opacity-50" />
             <p className="text-sm">No funding rounds added yet</p>
-            <p className="text-xs">Click "Add Round" to model your fundraising</p>
+            <p className="text-xs">Click &quot;Add Round&quot; to model your fundraising</p>
           </div>
         )}
 

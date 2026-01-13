@@ -9,49 +9,55 @@ const testimonials = [
     role: 'CEO, TechFlow',
     company: 'Series A SaaS',
     avatar: 'SC',
-    quote: 'This calculator helped us negotiate our Series A with confidence. We could model different scenarios and understand exactly how each term sheet would affect our ownership.',
-    rating: 5
+    quote:
+      'This calculator helped us negotiate our Series A with confidence. We could model different scenarios and understand exactly how each term sheet would affect our ownership.',
+    rating: 5,
   },
   {
     name: 'Marcus Rodriguez',
     role: 'Co-founder, BuildRight',
     company: 'Seed Stage Hardware',
     avatar: 'MR',
-    quote: 'As first-time founders, we had no idea how dilution would impact us long-term. The timeline visualization made it crystal clear. We ended up taking less money at a better valuation.',
-    rating: 5
+    quote:
+      'As first-time founders, we had no idea how dilution would impact us long-term. The timeline visualization made it crystal clear. We ended up taking less money at a better valuation.',
+    rating: 5,
   },
   {
     name: 'Emily Nakamura',
     role: 'Founder, HealthSync',
     company: 'Pre-seed Biotech',
     avatar: 'EN',
-    quote: 'The exit scenario modeling is incredible. We could show investors our path to 10x returns while maintaining meaningful founder ownership. It\'s become part of our fundraising deck.',
-    rating: 5
+    quote:
+      "The exit scenario modeling is incredible. We could show investors our path to 10x returns while maintaining meaningful founder ownership. It's become part of our fundraising deck.",
+    rating: 5,
   },
   {
     name: 'David Kim',
     role: 'CTO, DataCore',
     company: 'Series B AI',
     avatar: 'DK',
-    quote: 'We use this for every funding conversation. The option pool calculator alone saved us from making expensive mistakes. Highly recommend for any founder raising capital.',
-    rating: 5
+    quote:
+      'We use this for every funding conversation. The option pool calculator alone saved us from making expensive mistakes. Highly recommend for any founder raising capital.',
+    rating: 5,
   },
   {
     name: 'Priya Patel',
     role: 'Founder, MarketFlow',
     company: 'Bootstrapped to Profitable',
     avatar: 'PP',
-    quote: 'Started bootstrapped and used this to plan when to raise. We modeled different scenarios and decided to wait until we hit $5M ARR. Best decision we ever made.',
-    rating: 5
+    quote:
+      'Started bootstrapped and used this to plan when to raise. We modeled different scenarios and decided to wait until we hit $5M ARR. Best decision we ever made.',
+    rating: 5,
   },
   {
     name: 'James Wilson',
     role: 'Co-founder, Venture Labs',
     company: 'Angel Investor',
     avatar: 'JW',
-    quote: 'I share this with every founder I advise. It teaches fundamental equity concepts while providing practical value. The waterfall analysis is particularly well done.',
-    rating: 5
-  }
+    quote:
+      'I share this with every founder I advise. It teaches fundamental equity concepts while providing practical value. The waterfall analysis is particularly well done.',
+    rating: 5,
+  },
 ]
 
 export default function Testimonials() {
@@ -72,7 +78,7 @@ export default function Testimonials() {
             of Founders
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            From first-time founders to serial entrepreneurs, here's what they're saying
+            From first-time founders to serial entrepreneurs, here&apos;s what they&apos;re saying
             about the Equity Calculator.
           </p>
         </motion.div>
@@ -101,7 +107,7 @@ export default function Testimonials() {
 
                   {/* Quote */}
                   <p className="text-muted-foreground mb-6 italic">
-                    "{testimonial.quote}"
+                    &quot;{testimonial.quote}&quot;
                   </p>
 
                   {/* Author */}
@@ -113,12 +119,8 @@ export default function Testimonials() {
                     </Avatar>
                     <div>
                       <div className="font-semibold">{testimonial.name}</div>
-                      <div className="text-sm text-muted-foreground">
-                        {testimonial.role}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {testimonial.company}
-                      </div>
+                      <div className="text-sm text-muted-foreground">{testimonial.role}</div>
+                      <div className="text-xs text-muted-foreground">{testimonial.company}</div>
                     </div>
                   </div>
                 </CardContent>

@@ -7,24 +7,24 @@ const initialState = {
   company: {
     name: '',
     foundedDate: new Date(),
-    currentDate: new Date()
+    currentDate: new Date(),
   },
   founders: [],
   rounds: [],
   employees: [],
   optionPool: {
     size: 10,
-    allocated: 0
+    allocated: 0,
   },
   scenarios: [],
   settings: {
     theme: 'light',
-    autoSave: true
+    autoSave: true,
   },
   history: {
     past: [],
-    future: []
-  }
+    future: [],
+  },
 }
 
 const useCalculatorStore = create(
@@ -34,9 +34,9 @@ const useCalculatorStore = create(
         ...initialState,
 
         // Company Actions
-        setCompanyInfo: (info) =>
+        setCompanyInfo: info =>
           set(
-            produce((state) => {
+            produce(state => {
               state.company = { ...state.company, ...info }
             }),
             false,
@@ -44,9 +44,9 @@ const useCalculatorStore = create(
           ),
 
         // Founder Actions
-        addFounder: (founder) =>
+        addFounder: founder =>
           set(
-            produce((state) => {
+            produce(state => {
               state.founders.push({
                 id: crypto.randomUUID(),
                 name: '',
@@ -57,10 +57,10 @@ const useCalculatorStore = create(
                 contributionWeights: {
                   idea: 0,
                   execution: 0,
-                  capital: 0
+                  capital: 0,
                 },
                 departed: false,
-                ...founder
+                ...founder,
               })
             }),
             false,
@@ -69,8 +69,8 @@ const useCalculatorStore = create(
 
         updateFounder: (id, updates) =>
           set(
-            produce((state) => {
-              const index = state.founders.findIndex((f) => f.id === id)
+            produce(state => {
+              const index = state.founders.findIndex(f => f.id === id)
               if (index !== -1) {
                 state.founders[index] = { ...state.founders[index], ...updates }
               }
@@ -79,10 +79,10 @@ const useCalculatorStore = create(
             'updateFounder'
           ),
 
-        removeFounder: (id) =>
+        removeFounder: id =>
           set(
-            produce((state) => {
-              state.founders = state.founders.filter((f) => f.id !== id)
+            produce(state => {
+              state.founders = state.founders.filter(f => f.id !== id)
             }),
             false,
             'removeFounder'
@@ -90,8 +90,8 @@ const useCalculatorStore = create(
 
         markFounderDeparted: (id, departureDate) =>
           set(
-            produce((state) => {
-              const index = state.founders.findIndex((f) => f.id === id)
+            produce(state => {
+              const index = state.founders.findIndex(f => f.id === id)
               if (index !== -1) {
                 state.founders[index].departed = true
                 state.founders[index].departureDate = departureDate
@@ -102,9 +102,9 @@ const useCalculatorStore = create(
           ),
 
         // Round Actions
-        addRound: (round) =>
+        addRound: round =>
           set(
-            produce((state) => {
+            produce(state => {
               state.rounds.push({
                 id: crypto.randomUUID(),
                 date: new Date(),
@@ -116,7 +116,7 @@ const useCalculatorStore = create(
                 liquidationPreference: 1,
                 participating: false,
                 proRataRights: false,
-                ...round
+                ...round,
               })
               // Sort rounds by date
               state.rounds.sort((a, b) => new Date(a.date) - new Date(b.date))
@@ -127,8 +127,8 @@ const useCalculatorStore = create(
 
         updateRound: (id, updates) =>
           set(
-            produce((state) => {
-              const index = state.rounds.findIndex((r) => r.id === id)
+            produce(state => {
+              const index = state.rounds.findIndex(r => r.id === id)
               if (index !== -1) {
                 state.rounds[index] = { ...state.rounds[index], ...updates }
                 // Recalculate post-money if pre-money or investment changed
@@ -144,19 +144,19 @@ const useCalculatorStore = create(
             'updateRound'
           ),
 
-        removeRound: (id) =>
+        removeRound: id =>
           set(
-            produce((state) => {
-              state.rounds = state.rounds.filter((r) => r.id !== id)
+            produce(state => {
+              state.rounds = state.rounds.filter(r => r.id !== id)
             }),
             false,
             'removeRound'
           ),
 
         // Employee Actions
-        addEmployee: (employee) =>
+        addEmployee: employee =>
           set(
-            produce((state) => {
+            produce(state => {
               state.employees.push({
                 id: crypto.randomUUID(),
                 name: '',
@@ -166,7 +166,7 @@ const useCalculatorStore = create(
                 strikePrice: 0,
                 vestingMonths: 48,
                 cliffMonths: 12,
-                ...employee
+                ...employee,
               })
               // Update option pool allocation
               state.optionPool.allocated = state.employees.reduce(
@@ -180,8 +180,8 @@ const useCalculatorStore = create(
 
         updateEmployee: (id, updates) =>
           set(
-            produce((state) => {
-              const index = state.employees.findIndex((e) => e.id === id)
+            produce(state => {
+              const index = state.employees.findIndex(e => e.id === id)
               if (index !== -1) {
                 state.employees[index] = { ...state.employees[index], ...updates }
                 // Update option pool allocation
@@ -195,10 +195,10 @@ const useCalculatorStore = create(
             'updateEmployee'
           ),
 
-        removeEmployee: (id) =>
+        removeEmployee: id =>
           set(
-            produce((state) => {
-              state.employees = state.employees.filter((e) => e.id !== id)
+            produce(state => {
+              state.employees = state.employees.filter(e => e.id !== id)
               // Update option pool allocation
               state.optionPool.allocated = state.employees.reduce(
                 (sum, emp) => sum + emp.optionsGranted,
@@ -210,9 +210,9 @@ const useCalculatorStore = create(
           ),
 
         // Option Pool Actions
-        setOptionPool: (pool) =>
+        setOptionPool: pool =>
           set(
-            produce((state) => {
+            produce(state => {
               state.optionPool = { ...state.optionPool, ...pool }
             }),
             false,
@@ -220,15 +220,15 @@ const useCalculatorStore = create(
           ),
 
         // Scenario Actions
-        addScenario: (scenario) =>
+        addScenario: scenario =>
           set(
-            produce((state) => {
+            produce(state => {
               state.scenarios.push({
                 id: crypto.randomUUID(),
                 name: '',
                 exitValuation: 0,
                 calculations: null,
-                ...scenario
+                ...scenario,
               })
             }),
             false,
@@ -237,8 +237,8 @@ const useCalculatorStore = create(
 
         updateScenario: (id, updates) =>
           set(
-            produce((state) => {
-              const index = state.scenarios.findIndex((s) => s.id === id)
+            produce(state => {
+              const index = state.scenarios.findIndex(s => s.id === id)
               if (index !== -1) {
                 state.scenarios[index] = { ...state.scenarios[index], ...updates }
               }
@@ -247,19 +247,19 @@ const useCalculatorStore = create(
             'updateScenario'
           ),
 
-        removeScenario: (id) =>
+        removeScenario: id =>
           set(
-            produce((state) => {
-              state.scenarios = state.scenarios.filter((s) => s.id !== id)
+            produce(state => {
+              state.scenarios = state.scenarios.filter(s => s.id !== id)
             }),
             false,
             'removeScenario'
           ),
 
         // Settings Actions
-        setTheme: (theme) =>
+        setTheme: theme =>
           set(
-            produce((state) => {
+            produce(state => {
               state.settings.theme = theme
             }),
             false,
@@ -268,7 +268,7 @@ const useCalculatorStore = create(
 
         toggleAutoSave: () =>
           set(
-            produce((state) => {
+            produce(state => {
               state.settings.autoSave = !state.settings.autoSave
             }),
             false,
@@ -279,14 +279,14 @@ const useCalculatorStore = create(
         saveToHistory: () => {
           const state = get()
           set(
-            produce((draft) => {
+            produce(draft => {
               draft.history.past.push({
                 company: state.company,
                 founders: state.founders,
                 rounds: state.rounds,
                 employees: state.employees,
                 optionPool: state.optionPool,
-                scenarios: state.scenarios
+                scenarios: state.scenarios,
               })
               draft.history.future = []
             }),
@@ -300,7 +300,7 @@ const useCalculatorStore = create(
           if (state.history.past.length === 0) return
 
           set(
-            produce((draft) => {
+            produce(draft => {
               const previous = draft.history.past.pop()
               draft.history.future.push({
                 company: state.company,
@@ -308,7 +308,7 @@ const useCalculatorStore = create(
                 rounds: state.rounds,
                 employees: state.employees,
                 optionPool: state.optionPool,
-                scenarios: state.scenarios
+                scenarios: state.scenarios,
               })
               Object.assign(draft, previous)
             }),
@@ -322,7 +322,7 @@ const useCalculatorStore = create(
           if (state.history.future.length === 0) return
 
           set(
-            produce((draft) => {
+            produce(draft => {
               const next = draft.history.future.pop()
               draft.history.past.push({
                 company: state.company,
@@ -330,7 +330,7 @@ const useCalculatorStore = create(
                 rounds: state.rounds,
                 employees: state.employees,
                 optionPool: state.optionPool,
-                scenarios: state.scenarios
+                scenarios: state.scenarios,
               })
               Object.assign(draft, next)
             }),
@@ -342,9 +342,9 @@ const useCalculatorStore = create(
         // Utility Actions
         reset: () => set(initialState, false, 'reset'),
 
-        loadData: (data) =>
+        loadData: data =>
           set(
-            produce((state) => {
+            produce(state => {
               Object.assign(state, data)
             }),
             false,
@@ -352,9 +352,9 @@ const useCalculatorStore = create(
           ),
 
         // Template Actions
-        loadTemplate: (template) =>
+        loadTemplate: template =>
           set(
-            produce((state) => {
+            produce(state => {
               Object.assign(state, { ...initialState, ...template })
             }),
             false,
@@ -363,15 +363,15 @@ const useCalculatorStore = create(
       }),
       {
         name: 'equity-calculator-storage',
-        partialize: (state) => ({
+        partialize: state => ({
           company: state.company,
           founders: state.founders,
           rounds: state.rounds,
           employees: state.employees,
           optionPool: state.optionPool,
           scenarios: state.scenarios,
-          settings: state.settings
-        })
+          settings: state.settings,
+        }),
       }
     )
   )

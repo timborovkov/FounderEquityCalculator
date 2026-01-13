@@ -76,6 +76,6 @@ export function validateEquitySplit(stakeholders) {
   return {
     valid,
     total,
-    error: valid ? null : `Equity split must equal 100% (currently ${total.toFixed(2)}%)`
+    error: valid ? null : `Equity split must equal 100% (currently ${total.toFixed(2)}%)`,
   }
 }

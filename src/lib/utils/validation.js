@@ -13,14 +13,15 @@ export function checkExcessiveDilution(dilutionPercent) {
       type: 'warning',
       severity: 'high',
       message: `This round dilutes existing shareholders by ${dilutionPercent.toFixed(1)}%. Dilution over 40% in a single round is unusually high and may indicate unfavorable terms.`,
-      suggestion: 'Consider negotiating a higher valuation or smaller investment amount.'
+      suggestion: 'Consider negotiating a higher valuation or smaller investment amount.',
     }
   } else if (dilutionPercent > 30) {
     return {
       type: 'warning',
       severity: 'medium',
       message: `This round dilutes existing shareholders by ${dilutionPercent.toFixed(1)}%. This is on the higher end of typical dilution.`,
-      suggestion: 'Review your valuation and investment terms to ensure they align with market standards.'
+      suggestion:
+        'Review your valuation and investment terms to ensure they align with market standards.',
     }
   }
   return null
@@ -33,15 +34,15 @@ export function checkExcessiveDilution(dilutionPercent) {
  * @returns {Object} Warning object or null
  */
 export function checkOptionPool(poolSize, allocated) {
-  const available = poolSize - allocated
   const utilizationPercent = (allocated / poolSize) * 100
 
   if (poolSize < 1000000 && poolSize > 0) {
     return {
       type: 'warning',
       severity: 'medium',
-      message: 'Your option pool seems small. A typical early-stage startup reserves 10-20% of fully diluted shares for employees.',
-      suggestion: 'Consider increasing your option pool to attract top talent.'
+      message:
+        'Your option pool seems small. A typical early-stage startup reserves 10-20% of fully diluted shares for employees.',
+      suggestion: 'Consider increasing your option pool to attract top talent.',
     }
   }
 
@@ -50,7 +51,7 @@ export function checkOptionPool(poolSize, allocated) {
       type: 'warning',
       severity: 'high',
       message: `Your option pool is ${utilizationPercent.toFixed(0)}% utilized. You may not have enough options to make competitive offers.`,
-      suggestion: 'Consider refreshing your option pool in your next funding round.'
+      suggestion: 'Consider refreshing your option pool in your next funding round.',
     }
   }
 
@@ -59,7 +60,7 @@ export function checkOptionPool(poolSize, allocated) {
       type: 'info',
       severity: 'low',
       message: `Your option pool is ${utilizationPercent.toFixed(0)}% utilized. Start planning for a refresh.`,
-      suggestion: 'Discuss option pool expansion with your board and investors.'
+      suggestion: 'Discuss option pool expansion with your board and investors.',
     }
   }
 
@@ -83,7 +84,7 @@ export function checkFounderSplit(founders) {
         type: 'info',
         severity: 'medium',
         message: `There's a ${diff.toFixed(0)}% difference in equity between co-founders. Large disparities can cause tension.`,
-        suggestion: 'Ensure equity splits reflect long-term contributions and commitment.'
+        suggestion: 'Ensure equity splits reflect long-term contributions and commitment.',
       }
     }
   } else if (founders.length > 2) {
@@ -93,7 +94,7 @@ export function checkFounderSplit(founders) {
         type: 'info',
         severity: 'low',
         message: `One founder holds ${equities[0].toFixed(0)}% equity. This is fine if intentional, but ensure all founders feel fairly compensated.`,
-        suggestion: 'Use the contribution weighting tool to objectively assess equity splits.'
+        suggestion: 'Use the contribution weighting tool to objectively assess equity splits.',
       }
     }
   }
@@ -113,7 +114,8 @@ export function checkVestingSchedule(cliffMonths, vestingMonths) {
       type: 'warning',
       severity: 'medium',
       message: `Vesting period of ${vestingMonths} months is shorter than the typical 48 months.`,
-      suggestion: 'Standard vesting is 4 years with a 1-year cliff. Shorter periods reduce long-term alignment.'
+      suggestion:
+        'Standard vesting is 4 years with a 1-year cliff. Shorter periods reduce long-term alignment.',
     }
   }
 
@@ -122,7 +124,7 @@ export function checkVestingSchedule(cliffMonths, vestingMonths) {
       type: 'info',
       severity: 'low',
       message: 'No cliff period. Equity starts vesting immediately.',
-      suggestion: 'A 12-month cliff is standard to ensure commitment before equity is earned.'
+      suggestion: 'A 12-month cliff is standard to ensure commitment before equity is earned.',
     }
   }
 
@@ -131,7 +133,7 @@ export function checkVestingSchedule(cliffMonths, vestingMonths) {
       type: 'info',
       severity: 'low',
       message: `Cliff period of ${cliffMonths} months is longer than the standard 12 months.`,
-      suggestion: 'Extended cliffs may make offers less competitive.'
+      suggestion: 'Extended cliffs may make offers less competitive.',
     }
   }
 
@@ -150,7 +152,8 @@ export function checkLiquidationPreference(multiple, participating) {
       type: 'warning',
       severity: 'high',
       message: `${multiple}x liquidation preference with participating preferred is very investor-favorable and rare.`,
-      suggestion: 'This structure significantly reduces founder returns in exit scenarios. Seek legal counsel.'
+      suggestion:
+        'This structure significantly reduces founder returns in exit scenarios. Seek legal counsel.',
     }
   }
 
@@ -159,7 +162,8 @@ export function checkLiquidationPreference(multiple, participating) {
       type: 'warning',
       severity: 'high',
       message: `${multiple}x liquidation preference is extremely high and very uncommon.`,
-      suggestion: 'This is highly unfavorable to founders. Consider walking away or negotiating better terms.'
+      suggestion:
+        'This is highly unfavorable to founders. Consider walking away or negotiating better terms.',
     }
   }
 
@@ -168,7 +172,7 @@ export function checkLiquidationPreference(multiple, participating) {
       type: 'info',
       severity: 'medium',
       message: `${multiple}x liquidation preference means investors get ${multiple}x their money back before others in an exit.`,
-      suggestion: 'Understand how this impacts exit scenarios. Standard is 1x non-participating.'
+      suggestion: 'Understand how this impacts exit scenarios. Standard is 1x non-participating.',
     }
   }
 
@@ -176,8 +180,9 @@ export function checkLiquidationPreference(multiple, participating) {
     return {
       type: 'info',
       severity: 'low',
-      message: 'Participating preferred means investors get their preference AND pro-rata share of remaining proceeds.',
-      suggestion: 'This reduces founder returns. Non-participating is more founder-friendly.'
+      message:
+        'Participating preferred means investors get their preference AND pro-rata share of remaining proceeds.',
+      suggestion: 'This reduces founder returns. Non-participating is more founder-friendly.',
     }
   }
 
@@ -198,14 +203,15 @@ export function checkCumulativeDilution(initialEquity, currentEquity) {
       type: 'warning',
       severity: 'high',
       message: `Founders have been diluted by ${totalDilution.toFixed(0)}%. Cumulative dilution over 60% is concerning.`,
-      suggestion: 'Consider whether additional funding rounds are necessary or if alternative financing is available.'
+      suggestion:
+        'Consider whether additional funding rounds are necessary or if alternative financing is available.',
     }
   } else if (totalDilution > 40) {
     return {
       type: 'info',
       severity: 'medium',
       message: `Founders have been diluted by ${totalDilution.toFixed(0)}%. This is typical after multiple rounds.`,
-      suggestion: 'Ensure your ownership still provides meaningful upside in exit scenarios.'
+      suggestion: 'Ensure your ownership still provides meaningful upside in exit scenarios.',
     }
   }
 
@@ -223,14 +229,14 @@ export function validateCompanyData(company) {
   if (!company.name || company.name.trim() === '') {
     errors.push({
       field: 'company.name',
-      message: 'Company name is required'
+      message: 'Company name is required',
     })
   }
 
   if (!company.foundedDate) {
     errors.push({
       field: 'company.foundedDate',
-      message: 'Founded date is required'
+      message: 'Founded date is required',
     })
   }
 

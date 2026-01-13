@@ -61,11 +61,15 @@ export function calculateValuationHistory(rounds) {
     round: round.type,
     preMoneyValuation: round.preMoneyValuation,
     investment: round.investment,
-    postMoneyValuation: round.postMoneyValuation || calculatePostMoney(round.preMoneyValuation, round.investment),
+    postMoneyValuation:
+      round.postMoneyValuation || calculatePostMoney(round.preMoneyValuation, round.investment),
     previousValuation: index > 0 ? rounds[index - 1].postMoneyValuation : 0,
-    growth: index > 0
-      ? ((round.postMoneyValuation - rounds[index - 1].postMoneyValuation) / rounds[index - 1].postMoneyValuation) * 100
-      : 0
+    growth:
+      index > 0
+        ? ((round.postMoneyValuation - rounds[index - 1].postMoneyValuation) /
+            rounds[index - 1].postMoneyValuation) *
+          100
+        : 0,
   }))
 }
 
@@ -84,35 +88,36 @@ export function calculateImpliedValuation(metrics, multiples) {
   if (revenue && revenueMultiple) {
     valuations.push({
       method: 'Revenue Multiple',
-      valuation: revenue * revenueMultiple
+      valuation: revenue * revenueMultiple,
     })
   }
 
   if (users && userMultiple) {
     valuations.push({
       method: 'User Multiple',
-      valuation: users * userMultiple
+      valuation: users * userMultiple,
     })
   }
 
   if (mrr && mrrMultiple) {
     valuations.push({
       method: 'ARR Multiple',
-      valuation: mrr * 12 * mrrMultiple
+      valuation: mrr * 12 * mrrMultiple,
     })
   }
 
-  const avgValuation = valuations.length > 0
-    ? valuations.reduce((sum, v) => sum + v.valuation, 0) / valuations.length
-    : 0
+  const avgValuation =
+    valuations.length > 0
+      ? valuations.reduce((sum, v) => sum + v.valuation, 0) / valuations.length
+      : 0
 
   return {
     valuations,
     average: avgValuation,
     range: {
       low: Math.min(...valuations.map(v => v.valuation)),
-      high: Math.max(...valuations.map(v => v.valuation))
-    }
+      high: Math.max(...valuations.map(v => v.valuation)),
+    },
   }
 }
 
@@ -126,7 +131,7 @@ export function calculateOwnershipValue(ownershipPercentage, valuations) {
   return valuations.map(valuation => ({
     valuation,
     value: (ownershipPercentage / 100) * valuation,
-    ownershipPercentage
+    ownershipPercentage,
   }))
 }
 
@@ -150,7 +155,7 @@ export function calculateDilutedValue(initialOwnership, rounds, exitValuation) {
     initialOwnership,
     finalOwnership: currentOwnership,
     dilution: initialOwnership - currentOwnership,
-    value: (currentOwnership / 100) * exitValuation
+    value: (currentOwnership / 100) * exitValuation,
   }
 }
 
@@ -166,7 +171,7 @@ export function calculateExitValue(stakeholders, exitValuation) {
     exitValue: (stakeholder.ownership / 100) * exitValuation,
     multiple: stakeholder.invested
       ? ((stakeholder.ownership / 100) * exitValuation) / stakeholder.invested
-      : null
+      : null,
   }))
 }
 

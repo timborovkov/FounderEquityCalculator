@@ -10,9 +10,7 @@ export function calculateLiquidationWaterfall(exitValuation, stakeholders, round
   const distribution = []
 
   // Sort rounds by seniority (later rounds typically have priority)
-  const sortedRounds = [...rounds].sort((a, b) =>
-    new Date(b.date) - new Date(a.date)
-  )
+  const sortedRounds = [...rounds].sort((a, b) => new Date(b.date) - new Date(a.date))
 
   // Step 1: Pay liquidation preferences
   sortedRounds.forEach(round => {
@@ -22,7 +20,7 @@ export function calculateLiquidationWaterfall(exitValuation, stakeholders, round
         round: round.type,
         stage: 'liquidation-preference',
         amount: 0,
-        source: 'preference'
+        source: 'preference',
       })
       return
     }
@@ -36,7 +34,7 @@ export function calculateLiquidationWaterfall(exitValuation, stakeholders, round
       stage: 'liquidation-preference',
       amount: payout,
       source: 'preference',
-      ownership: 0 // Will be updated if participating
+      ownership: 0, // Will be updated if participating
     })
 
     remainingProceeds -= payout
@@ -57,9 +55,9 @@ export function calculateLiquidationWaterfall(exitValuation, stakeholders, round
 
       if (investorStakeholder) {
         const proRataShare = (investorStakeholder.ownership / 100) * exitValuation
-        const preferenceAmount = distribution.find(
-          d => d.round === round.type && d.stage === 'liquidation-preference'
-        )?.amount || 0
+        const preferenceAmount =
+          distribution.find(d => d.round === round.type && d.stage === 'liquidation-preference')
+            ?.amount || 0
 
         // Convert if pro-rata share is better
         if (proRataShare > preferenceAmount) {
@@ -85,15 +83,11 @@ export function calculateLiquidationWaterfall(exitValuation, stakeholders, round
     )
 
     const participatingInvestors = stakeholders.filter(
-      s => s.type === 'investor' &&
-      participatingRounds.some(r => r.type === s.round)
+      s => s.type === 'investor' && participatingRounds.some(r => r.type === s.round)
     )
 
     const allParticipating = [...commonStakeholders, ...participatingInvestors]
-    const totalParticipatingOwnership = allParticipating.reduce(
-      (sum, s) => sum + s.ownership,
-      0
-    )
+    const totalParticipatingOwnership = allParticipating.reduce((sum, s) => sum + s.ownership, 0)
 
     allParticipating.forEach(stakeholder => {
       const proRataShare = (stakeholder.ownership / totalParticipatingOwnership) * remainingProceeds
@@ -104,7 +98,7 @@ export function calculateLiquidationWaterfall(exitValuation, stakeholders, round
         stage: 'pro-rata',
         amount: proRataShare,
         source: 'common',
-        ownership: stakeholder.ownership
+        ownership: stakeholder.ownership,
       })
     })
   }
@@ -119,7 +113,7 @@ export function calculateLiquidationWaterfall(exitValuation, stakeholders, round
         stakeholder: d.stakeholder,
         type: d.type || 'investor',
         total: 0,
-        breakdown: []
+        breakdown: [],
       }
     }
 
@@ -131,7 +125,7 @@ export function calculateLiquidationWaterfall(exitValuation, stakeholders, round
     distribution,
     stakeholderTotals: Object.values(stakeholderTotals),
     totalDistributed: Object.values(stakeholderTotals).reduce((sum, s) => sum + s.total, 0),
-    exitValuation
+    exitValuation,
   }
 }
 
@@ -153,7 +147,7 @@ export function calculateSimpleWaterfall(exitValuation, stakeholders) {
       payout,
       invested,
       profit,
-      multiple
+      multiple,
     }
   })
 }
@@ -194,7 +188,7 @@ export function calculateMOIC(proceeds, invested) {
  */
 export function calculateBreakevenValuation(rounds) {
   return rounds.reduce((sum, round) => {
-    return sum + (round.investment * (round.liquidationPreference || 1))
+    return sum + round.investment * (round.liquidationPreference || 1)
   }, 0)
 }
 
@@ -216,7 +210,7 @@ export function calculatePayoutScenarios(stakeholder, exitValuations, rounds, al
     return {
       exitValuation: exitVal,
       payout: stakeholderPayout?.total || 0,
-      percentage: ((stakeholderPayout?.total || 0) / exitVal) * 100
+      percentage: ((stakeholderPayout?.total || 0) / exitVal) * 100,
     }
   })
 }
@@ -237,7 +231,7 @@ export function compareWaterfallScenarios(exitValuation, stakeholders, rounds) {
     stakeholder: s.name,
     type: s.type,
     payout: (s.ownership / 100) * exitValuation,
-    ownership: s.ownership
+    ownership: s.ownership,
   }))
 
   // Calculate difference
@@ -250,7 +244,7 @@ export function compareWaterfallScenarios(exitValuation, stakeholders, rounds) {
       type: s.type,
       withPreferences: withPref?.total || 0,
       proRata: withoutPref?.payout || 0,
-      difference: (withPref?.total || 0) - (withoutPref?.payout || 0)
+      difference: (withPref?.total || 0) - (withoutPref?.payout || 0),
     }
   })
 
@@ -258,6 +252,6 @@ export function compareWaterfallScenarios(exitValuation, stakeholders, rounds) {
     withPreferences: withPreferences.stakeholderTotals,
     proRata,
     comparison,
-    exitValuation
+    exitValuation,
   }
 }

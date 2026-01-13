@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Download, FileText, Table, Image } from 'lucide-react'
+import { Download, FileText, Table } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -9,7 +9,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { exportCapTableToCSV, exportToPDF } from '@/lib/utils/export'
 import { exportToJSON } from '@/lib/utils/storage'
 import useCalculatorStore from '@/store/useCalculatorStore'
@@ -57,7 +57,7 @@ export default function ExportDialog({ isOpen, onClose }) {
         rounds: store.rounds,
         employees: store.employees,
         optionPool: store.optionPool,
-        scenarios: store.scenarios
+        scenarios: store.scenarios,
       }
       exportToJSON(data)
       alert('JSON exported successfully!')
@@ -75,7 +75,7 @@ export default function ExportDialog({ isOpen, onClose }) {
       description: 'Complete report with company overview, cap table, charts, and scenarios',
       icon: FileText,
       action: handleExportPDF,
-      available: true
+      available: true,
     },
     {
       id: 'csv',
@@ -83,7 +83,7 @@ export default function ExportDialog({ isOpen, onClose }) {
       description: 'Spreadsheet-compatible file with current ownership breakdown',
       icon: Table,
       action: handleExportCSV,
-      available: true
+      available: true,
     },
     {
       id: 'json',
@@ -91,8 +91,8 @@ export default function ExportDialog({ isOpen, onClose }) {
       description: 'Complete data export for backup or migration',
       icon: FileText,
       action: handleExportJSON,
-      available: true
-    }
+      available: true,
+    },
   ]
 
   return (
@@ -103,13 +103,11 @@ export default function ExportDialog({ isOpen, onClose }) {
             <Download className="w-5 h-5" />
             Export Data
           </DialogTitle>
-          <DialogDescription>
-            Export your equity data in various formats
-          </DialogDescription>
+          <DialogDescription>Export your equity data in various formats</DialogDescription>
         </DialogHeader>
 
         <div className="grid grid-cols-1 gap-4 py-4">
-          {exportOptions.map((option) => {
+          {exportOptions.map(option => {
             const Icon = option.icon
             return (
               <Card
@@ -146,8 +144,8 @@ export default function ExportDialog({ isOpen, onClose }) {
         </div>
 
         <div className="bg-muted p-4 rounded-lg text-sm text-muted-foreground">
-          <strong>Note:</strong> PDF exports include a comprehensive report with all sections.
-          For detailed customization, consider using the CSV export to import into spreadsheet software.
+          <strong>Note:</strong> PDF exports include a comprehensive report with all sections. For
+          detailed customization, consider using the CSV export to import into spreadsheet software.
         </div>
 
         <DialogFooter>

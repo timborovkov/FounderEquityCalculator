@@ -18,7 +18,7 @@ export function calculateRoundDilution(preMoneyValuation, investment, totalShare
     newShares,
     totalSharesAfter,
     dilutionPercentage,
-    investorOwnership: (newShares / totalSharesAfter) * 100
+    investorOwnership: (newShares / totalSharesAfter) * 100,
   }
 }
 
@@ -31,7 +31,7 @@ export function calculateRoundDilution(preMoneyValuation, investment, totalShare
 export function applyDilution(stakeholders, dilutionFactor) {
   return stakeholders.map(stakeholder => ({
     ...stakeholder,
-    ownership: stakeholder.ownership * (1 - dilutionFactor)
+    ownership: stakeholder.ownership * (1 - dilutionFactor),
   }))
 }
 
@@ -73,9 +73,7 @@ export function checkDilutionWarning(dilutionPercentage, threshold = 40) {
 
   return {
     warning,
-    message: warning
-      ? `High dilution: ${dilutionPercentage.toFixed(1)}% in a single round`
-      : null
+    message: warning ? `High dilution: ${dilutionPercentage.toFixed(1)}% in a single round` : null,
   }
 }
 
@@ -92,21 +90,17 @@ export function calculateCurrentOwnership(founders, rounds, employees = []) {
   let stakeholders = founders.map(f => ({
     ...f,
     shares: Math.round((f.equity / 100) * totalShares),
-    type: 'founder'
+    type: 'founder',
   }))
 
   // Apply dilution from each round
   rounds.forEach(round => {
-    const dilution = calculateRoundDilution(
-      round.preMoneyValuation,
-      round.investment,
-      totalShares
-    )
+    const dilution = calculateRoundDilution(round.preMoneyValuation, round.investment, totalShares)
 
     // Dilute existing stakeholders
     stakeholders = stakeholders.map(s => ({
       ...s,
-      shares: Math.round(s.shares * (1 - dilution.dilutionPercentage / 100))
+      shares: Math.round(s.shares * (1 - dilution.dilutionPercentage / 100)),
     }))
 
     // Add new investors
@@ -116,7 +110,7 @@ export function calculateCurrentOwnership(founders, rounds, employees = []) {
       name: round.leadInvestors?.join(', ') || 'Investor',
       shares: investorShares,
       type: 'investor',
-      round: round.type
+      round: round.type,
     })
 
     totalShares = dilution.totalSharesAfter
@@ -128,7 +122,7 @@ export function calculateCurrentOwnership(founders, rounds, employees = []) {
       stakeholders.push({
         ...emp,
         shares: emp.vestedShares,
-        type: 'employee'
+        type: 'employee',
       })
       totalShares += emp.vestedShares
     }
@@ -137,11 +131,11 @@ export function calculateCurrentOwnership(founders, rounds, employees = []) {
   // Calculate ownership percentages
   stakeholders = stakeholders.map(s => ({
     ...s,
-    ownership: (s.shares / totalShares) * 100
+    ownership: (s.shares / totalShares) * 100,
   }))
 
   return {
     stakeholders,
-    totalShares
+    totalShares,
   }
 }

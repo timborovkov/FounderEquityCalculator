@@ -1,5 +1,5 @@
 import { useState, useCallback, useMemo } from 'react'
-import { differenceInDays, addMonths, subMonths, format } from 'date-fns'
+import { differenceInDays, addMonths, format } from 'date-fns'
 
 export default function useTimeline(startDate, endDate) {
   const [zoom, setZoom] = useState(1) // 1 = default, 2 = zoomed in, 0.5 = zoomed out
@@ -16,21 +16,27 @@ export default function useTimeline(startDate, endDate) {
       pixelsPerDay,
       totalWidth,
       startDate,
-      endDate
+      endDate,
     }
   }, [startDate, endDate, zoom])
 
   // Convert date to X position on timeline
-  const dateToX = useCallback((date) => {
-    const days = differenceInDays(date, timelineDimensions.startDate)
-    return days * timelineDimensions.pixelsPerDay
-  }, [timelineDimensions])
+  const dateToX = useCallback(
+    date => {
+      const days = differenceInDays(date, timelineDimensions.startDate)
+      return days * timelineDimensions.pixelsPerDay
+    },
+    [timelineDimensions]
+  )
 
   // Convert X position to date
-  const xToDate = useCallback((x) => {
-    const days = Math.round(x / timelineDimensions.pixelsPerDay)
-    return addMonths(timelineDimensions.startDate, Math.round(days / 30))
-  }, [timelineDimensions])
+  const xToDate = useCallback(
+    x => {
+      const days = Math.round(x / timelineDimensions.pixelsPerDay)
+      return addMonths(timelineDimensions.startDate, Math.round(days / 30))
+    },
+    [timelineDimensions]
+  )
 
   // Zoom in/out
   const zoomIn = useCallback(() => {
@@ -56,7 +62,7 @@ export default function useTimeline(startDate, endDate) {
       markers.push({
         date: new Date(currentDate),
         x: dateToX(currentDate),
-        label: format(currentDate, 'MMM yyyy')
+        label: format(currentDate, 'MMM yyyy'),
       })
       currentDate = addMonths(currentDate, 1)
     }
@@ -74,6 +80,6 @@ export default function useTimeline(startDate, endDate) {
     dateToX,
     xToDate,
     axisMarkers,
-    dimensions: timelineDimensions
+    dimensions: timelineDimensions,
   }
 }

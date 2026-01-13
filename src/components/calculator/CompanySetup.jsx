@@ -20,9 +20,7 @@ export default function CompanySetup() {
           </div>
           <div>
             <CardTitle className="text-xl">Company Information</CardTitle>
-            <CardDescription className="mt-1">
-              Basic details about your startup
-            </CardDescription>
+            <CardDescription className="mt-1">Basic details about your startup</CardDescription>
           </div>
         </div>
       </CardHeader>
@@ -34,7 +32,7 @@ export default function CompanySetup() {
             id="company-name"
             placeholder="e.g., Acme Inc."
             value={company.name || ''}
-            onChange={(e) => handleChange('name', e.target.value)}
+            onChange={e => handleChange('name', e.target.value)}
             aria-describedby="company-name-help"
           />
           <p id="company-name-help" className="text-xs text-muted-foreground">
@@ -51,8 +49,10 @@ export default function CompanySetup() {
           <Input
             id="founded-date"
             type="date"
-            value={company.foundedDate ? new Date(company.foundedDate).toISOString().split('T')[0] : ''}
-            onChange={(e) => handleChange('foundedDate', new Date(e.target.value))}
+            value={
+              company.foundedDate ? new Date(company.foundedDate).toISOString().split('T')[0] : ''
+            }
+            onChange={e => handleChange('foundedDate', new Date(e.target.value))}
             aria-describedby="founded-date-help"
           />
           <p id="founded-date-help" className="text-xs text-muted-foreground">
@@ -66,12 +66,14 @@ export default function CompanySetup() {
           <Input
             id="current-date"
             type="date"
-            value={company.currentDate ? new Date(company.currentDate).toISOString().split('T')[0] : ''}
-            onChange={(e) => handleChange('currentDate', new Date(e.target.value))}
+            value={
+              company.currentDate ? new Date(company.currentDate).toISOString().split('T')[0] : ''
+            }
+            onChange={e => handleChange('currentDate', new Date(e.target.value))}
             aria-describedby="current-date-help"
           />
           <p id="current-date-help" className="text-xs text-muted-foreground">
-            The date to calculate vesting progress and ownership. Usually today's date.
+            The date to calculate vesting progress and ownership. Usually today&apos;s date.
           </p>
         </div>
       </CardContent>

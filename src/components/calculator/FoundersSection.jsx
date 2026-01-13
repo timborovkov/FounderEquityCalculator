@@ -4,7 +4,6 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { Slider } from '@/components/ui/slider'
 import { Badge } from '@/components/ui/badge'
 import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Separator } from '@/components/ui/separator'
@@ -29,7 +28,8 @@ import useCalculatorStore from '@/store/useCalculatorStore'
 import { DEFAULT_VESTING } from '@/data/constants'
 
 export default function FoundersSection() {
-  const { founders, addFounder, updateFounder, removeFounder, markFounderDeparted } = useCalculatorStore()
+  const { founders, addFounder, updateFounder, removeFounder, markFounderDeparted } =
+    useCalculatorStore()
   const [editingFounder, setEditingFounder] = useState(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
 
@@ -43,13 +43,13 @@ export default function FoundersSection() {
     contributionWeights: {
       idea: 33,
       execution: 34,
-      capital: 33
+      capital: 33,
     },
     contributions: {
       workHours: 0,
       hourlyRate: 0,
-      cashInvested: 0
-    }
+      cashInvested: 0,
+    },
   })
 
   const totalEquity = founders.reduce((sum, f) => sum + (f.equity || 0), 0)
@@ -58,17 +58,24 @@ export default function FoundersSection() {
   // Calculate contribution-based recommendations
   const calculateRecommendedSplit = () => {
     const foundersWithContributions = founders.map(founder => {
-      const contributions = founder.contributions || { workHours: 0, hourlyRate: 0, cashInvested: 0 }
+      const contributions = founder.contributions || {
+        workHours: 0,
+        hourlyRate: 0,
+        cashInvested: 0,
+      }
       const workValue = contributions.workHours * contributions.hourlyRate
       const totalValue = workValue + contributions.cashInvested
       return {
         ...founder,
         workValue,
-        totalValue
+        totalValue,
       }
     })
 
-    const totalContributionValue = foundersWithContributions.reduce((sum, f) => sum + f.totalValue, 0)
+    const totalContributionValue = foundersWithContributions.reduce(
+      (sum, f) => sum + f.totalValue,
+      0
+    )
 
     if (totalContributionValue === 0) {
       return []
@@ -76,7 +83,7 @@ export default function FoundersSection() {
 
     return foundersWithContributions.map(founder => ({
       ...founder,
-      recommendedEquity: (founder.totalValue / totalContributionValue) * 100
+      recommendedEquity: (founder.totalValue / totalContributionValue) * 100,
     }))
   }
 
@@ -84,7 +91,11 @@ export default function FoundersSection() {
   const hasContributions = recommendations.some(r => r.totalValue > 0)
 
   const applyRecommendedSplit = () => {
-    if (confirm('Apply the recommended equity split based on contributions? This will overwrite current equity percentages.')) {
+    if (
+      confirm(
+        'Apply the recommended equity split based on contributions? This will overwrite current equity percentages.'
+      )
+    ) {
       recommendations.forEach(rec => {
         if (rec.recommendedEquity > 0) {
           updateFounder(rec.id, { equity: parseFloat(rec.recommendedEquity.toFixed(2)) })
@@ -104,13 +115,13 @@ export default function FoundersSection() {
         contributionWeights: founder.contributionWeights || {
           idea: 33,
           execution: 34,
-          capital: 33
+          capital: 33,
         },
         contributions: founder.contributions || {
           workHours: 0,
           hourlyRate: 0,
-          cashInvested: 0
-        }
+          cashInvested: 0,
+        },
       })
       setEditingFounder(founder.id)
     } else {
@@ -123,13 +134,13 @@ export default function FoundersSection() {
         contributionWeights: {
           idea: 33,
           execution: 34,
-          capital: 33
+          capital: 33,
         },
         contributions: {
           workHours: 0,
           hourlyRate: 0,
-          cashInvested: 0
-        }
+          cashInvested: 0,
+        },
       })
       setEditingFounder(null)
     }
@@ -140,7 +151,7 @@ export default function FoundersSection() {
     const data = {
       ...formData,
       vestingStart: new Date(formData.vestingStart),
-      equity: parseFloat(formData.equity)
+      equity: parseFloat(formData.equity),
     }
 
     if (editingFounder) {
@@ -152,15 +163,18 @@ export default function FoundersSection() {
     setIsDialogOpen(false)
   }
 
-  const handleDelete = (founderId) => {
+  const handleDelete = founderId => {
     if (confirm('Are you sure you want to remove this founder?')) {
       removeFounder(founderId)
     }
   }
 
-  const handleMarkDeparted = (founderId) => {
+  const handleMarkDeparted = founderId => {
     if (confirm('Mark this founder as departed? Their unvested shares will be forfeited.')) {
-      const departureDate = prompt('Departure date (YYYY-MM-DD):', new Date().toISOString().split('T')[0])
+      const departureDate = prompt(
+        'Departure date (YYYY-MM-DD):',
+        new Date().toISOString().split('T')[0]
+      )
       if (departureDate) {
         markFounderDeparted(founderId, new Date(departureDate))
       }
@@ -193,12 +207,8 @@ export default function FoundersSection() {
 
             <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
-                <DialogTitle>
-                  {editingFounder ? 'Edit Founder' : 'Add Founder'}
-                </DialogTitle>
-                <DialogDescription>
-                  Set equity percentage and vesting schedule
-                </DialogDescription>
+                <DialogTitle>{editingFounder ? 'Edit Founder' : 'Add Founder'}</DialogTitle>
+                <DialogDescription>Set equity percentage and vesting schedule</DialogDescription>
               </DialogHeader>
 
               <div className="space-y-6 py-4">
@@ -209,7 +219,7 @@ export default function FoundersSection() {
                     id="founder-name"
                     placeholder="e.g., Jane Doe"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={e => setFormData({ ...formData, name: e.target.value })}
                   />
                 </div>
 
@@ -224,12 +234,10 @@ export default function FoundersSection() {
                       max="100"
                       step="0.1"
                       value={formData.equity}
-                      onChange={(e) => setFormData({ ...formData, equity: e.target.value })}
+                      onChange={e => setFormData({ ...formData, equity: e.target.value })}
                       className="w-32"
                     />
-                    <span className="text-2xl font-bold text-primary-600">
-                      {formData.equity}%
-                    </span>
+                    <span className="text-2xl font-bold text-primary-600">{formData.equity}%</span>
                   </div>
                 </div>
 
@@ -245,7 +253,7 @@ export default function FoundersSection() {
                       id="vesting-start"
                       type="date"
                       value={formData.vestingStart}
-                      onChange={(e) => setFormData({ ...formData, vestingStart: e.target.value })}
+                      onChange={e => setFormData({ ...formData, vestingStart: e.target.value })}
                     />
                   </div>
 
@@ -258,11 +266,11 @@ export default function FoundersSection() {
                         min="0"
                         max="48"
                         value={formData.cliffMonths}
-                        onChange={(e) => setFormData({ ...formData, cliffMonths: parseInt(e.target.value) })}
+                        onChange={e =>
+                          setFormData({ ...formData, cliffMonths: parseInt(e.target.value) })
+                        }
                       />
-                      <p className="text-xs text-muted-foreground">
-                        Typically 12 months
-                      </p>
+                      <p className="text-xs text-muted-foreground">Typically 12 months</p>
                     </div>
 
                     <div className="space-y-2">
@@ -273,11 +281,11 @@ export default function FoundersSection() {
                         min="0"
                         max="120"
                         value={formData.vestingMonths}
-                        onChange={(e) => setFormData({ ...formData, vestingMonths: parseInt(e.target.value) })}
+                        onChange={e =>
+                          setFormData({ ...formData, vestingMonths: parseInt(e.target.value) })
+                        }
                       />
-                      <p className="text-xs text-muted-foreground">
-                        Typically 48 months (4 years)
-                      </p>
+                      <p className="text-xs text-muted-foreground">Typically 48 months (4 years)</p>
                     </div>
                   </div>
                 </div>
@@ -288,7 +296,8 @@ export default function FoundersSection() {
                 <div className="space-y-4">
                   <h4 className="font-semibold">Contribution Calculator</h4>
                   <p className="text-sm text-muted-foreground">
-                    Track work hours, cash investment, and other contributions to help determine fair equity splits
+                    Track work hours, cash investment, and other contributions to help determine
+                    fair equity splits
                   </p>
 
                   <div className="grid grid-cols-2 gap-4">
@@ -301,14 +310,17 @@ export default function FoundersSection() {
                         step="1"
                         placeholder="e.g., 2000"
                         value={formData.contributions.workHours}
-                        onChange={(e) => setFormData({
-                          ...formData,
-                          contributions: { ...formData.contributions, workHours: parseFloat(e.target.value) || 0 }
-                        })}
+                        onChange={e =>
+                          setFormData({
+                            ...formData,
+                            contributions: {
+                              ...formData.contributions,
+                              workHours: parseFloat(e.target.value) || 0,
+                            },
+                          })
+                        }
                       />
-                      <p className="text-xs text-muted-foreground">
-                        Total hours spent building
-                      </p>
+                      <p className="text-xs text-muted-foreground">Total hours spent building</p>
                     </div>
 
                     <div className="space-y-2">
@@ -320,14 +332,17 @@ export default function FoundersSection() {
                         step="1"
                         placeholder="e.g., 100"
                         value={formData.contributions.hourlyRate}
-                        onChange={(e) => setFormData({
-                          ...formData,
-                          contributions: { ...formData.contributions, hourlyRate: parseFloat(e.target.value) || 0 }
-                        })}
+                        onChange={e =>
+                          setFormData({
+                            ...formData,
+                            contributions: {
+                              ...formData.contributions,
+                              hourlyRate: parseFloat(e.target.value) || 0,
+                            },
+                          })
+                        }
                       />
-                      <p className="text-xs text-muted-foreground">
-                        Market value per hour
-                      </p>
+                      <p className="text-xs text-muted-foreground">Market value per hour</p>
                     </div>
                   </div>
 
@@ -340,10 +355,15 @@ export default function FoundersSection() {
                       step="100"
                       placeholder="e.g., 50000"
                       value={formData.contributions.cashInvested}
-                      onChange={(e) => setFormData({
-                        ...formData,
-                        contributions: { ...formData.contributions, cashInvested: parseFloat(e.target.value) || 0 }
-                      })}
+                      onChange={e =>
+                        setFormData({
+                          ...formData,
+                          contributions: {
+                            ...formData.contributions,
+                            cashInvested: parseFloat(e.target.value) || 0,
+                          },
+                        })
+                      }
                     />
                     <p className="text-xs text-muted-foreground">
                       Personal capital invested in the company
@@ -357,11 +377,19 @@ export default function FoundersSection() {
                         Total Contribution Value:
                       </span>
                       <span className="text-xl font-bold text-primary-900 dark:text-primary-100">
-                        ${((formData.contributions.workHours * formData.contributions.hourlyRate) + formData.contributions.cashInvested).toLocaleString()}
+                        $
+                        {(
+                          formData.contributions.workHours * formData.contributions.hourlyRate +
+                          formData.contributions.cashInvested
+                        ).toLocaleString()}
                       </span>
                     </div>
                     <p className="text-xs text-muted-foreground mt-1">
-                      (Work: ${(formData.contributions.workHours * formData.contributions.hourlyRate).toLocaleString()} + Cash: ${formData.contributions.cashInvested.toLocaleString()})
+                      (Work: $
+                      {(
+                        formData.contributions.workHours * formData.contributions.hourlyRate
+                      ).toLocaleString()}{' '}
+                      + Cash: ${formData.contributions.cashInvested.toLocaleString()})
                     </p>
                   </div>
                 </div>
@@ -385,7 +413,8 @@ export default function FoundersSection() {
         {isOverAllocated && (
           <Alert variant="destructive">
             <AlertDescription>
-              Total equity ({totalEquity.toFixed(1)}%) exceeds 100%. Please adjust founder percentages.
+              Total equity ({totalEquity.toFixed(1)}%) exceeds 100%. Please adjust founder
+              percentages.
             </AlertDescription>
           </Alert>
         )}
@@ -393,7 +422,11 @@ export default function FoundersSection() {
         {/* Total Equity Badge */}
         <div className="flex items-center gap-2">
           <span className="text-sm text-muted-foreground">Total Allocated:</span>
-          <Badge variant={isOverAllocated ? 'destructive' : totalEquity === 100 ? 'default' : 'secondary'}>
+          <Badge
+            variant={
+              isOverAllocated ? 'destructive' : totalEquity === 100 ? 'default' : 'secondary'
+            }
+          >
             {totalEquity.toFixed(1)}%
           </Badge>
         </div>
@@ -413,8 +446,13 @@ export default function FoundersSection() {
             </TableHeader>
             <TableBody>
               {founders.map(founder => {
-                const contributions = founder.contributions || { workHours: 0, hourlyRate: 0, cashInvested: 0 }
-                const totalContribution = (contributions.workHours * contributions.hourlyRate) + contributions.cashInvested
+                const contributions = founder.contributions || {
+                  workHours: 0,
+                  hourlyRate: 0,
+                  cashInvested: 0,
+                }
+                const totalContribution =
+                  contributions.workHours * contributions.hourlyRate + contributions.cashInvested
 
                 return (
                   <TableRow key={founder.id}>
@@ -441,43 +479,43 @@ export default function FoundersSection() {
                         <Badge variant="default">Active</Badge>
                       )}
                     </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-1">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleOpenDialog(founder)}
-                        aria-label={`Edit ${founder.name}`}
-                        title={`Edit ${founder.name}`}
-                      >
-                        <Edit2 className="w-4 h-4" />
-                        <span className="sr-only">Edit</span>
-                      </Button>
-                      {!founder.departed && (
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-1">
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleMarkDeparted(founder.id)}
-                          aria-label={`Mark ${founder.name} as departed`}
-                          title={`Mark ${founder.name} as departed`}
+                          onClick={() => handleOpenDialog(founder)}
+                          aria-label={`Edit ${founder.name}`}
+                          title={`Edit ${founder.name}`}
                         >
-                          <UserX className="w-4 h-4" />
-                          <span className="sr-only">Mark departed</span>
+                          <Edit2 className="w-4 h-4" />
+                          <span className="sr-only">Edit</span>
                         </Button>
-                      )}
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDelete(founder.id)}
-                        aria-label={`Delete ${founder.name}`}
-                        title={`Delete ${founder.name}`}
-                      >
-                        <Trash2 className="w-4 h-4" />
-                        <span className="sr-only">Delete</span>
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
+                        {!founder.departed && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleMarkDeparted(founder.id)}
+                            aria-label={`Mark ${founder.name} as departed`}
+                            title={`Mark ${founder.name} as departed`}
+                          >
+                            <UserX className="w-4 h-4" />
+                            <span className="sr-only">Mark departed</span>
+                          </Button>
+                        )}
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDelete(founder.id)}
+                          aria-label={`Delete ${founder.name}`}
+                          title={`Delete ${founder.name}`}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          <span className="sr-only">Delete</span>
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
                 )
               })}
             </TableBody>
@@ -486,7 +524,7 @@ export default function FoundersSection() {
           <div className="text-center py-12 text-muted-foreground">
             <Users className="w-12 h-12 mx-auto mb-4 opacity-50" />
             <p className="text-sm">No founders added yet</p>
-            <p className="text-xs">Click "Add Founder" to get started</p>
+            <p className="text-xs">Click &quot;Add Founder&quot; to get started</p>
           </div>
         )}
 
@@ -502,21 +540,14 @@ export default function FoundersSection() {
                     Based on work hours, hourly rates, and cash invested
                   </p>
                 </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={applyRecommendedSplit}
-                >
+                <Button variant="outline" size="sm" onClick={applyRecommendedSplit}>
                   Apply to Equity
                 </Button>
               </div>
 
               <div className="grid gap-3">
                 {recommendations.map(rec => (
-                  <div
-                    key={rec.id}
-                    className="p-4 bg-muted/50 rounded-lg border"
-                  >
+                  <div key={rec.id} className="p-4 bg-muted/50 rounded-lg border">
                     <div className="flex items-center justify-between mb-2">
                       <span className="font-medium">{rec.name}</span>
                       <Badge variant="secondary" className="text-base px-3">
@@ -543,8 +574,9 @@ export default function FoundersSection() {
 
               <Alert>
                 <AlertDescription className="text-xs">
-                  <strong>Note:</strong> This is a suggestion tool to help with fair equity distribution.
-                  It doesn't automatically affect your cap table. Click "Apply to Equity" to use these percentages.
+                  <strong>Note:</strong> This is a suggestion tool to help with fair equity
+                  distribution. It doesn&apos;t automatically affect your cap table. Click
+                  &quot;Apply to Equity&quot; to use these percentages.
                 </AlertDescription>
               </Alert>
             </div>

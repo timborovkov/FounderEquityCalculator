@@ -1,5 +1,16 @@
 import { Link } from 'react-router-dom'
-import { Save, FolderOpen, Download, Share2, Moon, Sun, Home, Undo2, Redo2, FileText } from 'lucide-react'
+import {
+  Save,
+  FolderOpen,
+  Download,
+  Share2,
+  Moon,
+  Sun,
+  Home,
+  Undo2,
+  Redo2,
+  FileText,
+} from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import {
@@ -117,20 +128,14 @@ export default function Navigation({ onSave, onLoad, onExport, onShare }) {
             {/* Export */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  aria-label="Export calculator data"
-                >
+                <Button variant="ghost" size="sm" aria-label="Export calculator data">
                   <Download className="w-4 h-4 mr-2" />
                   <span className="hidden md:inline">Export</span>
                   <span className="md:hidden sr-only">Export</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => onExport('pdf')}>
-                  Export as PDF
-                </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onExport('pdf')}>Export as PDF</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => onExport('csv')}>
                   Export Cap Table (CSV)
                 </DropdownMenuItem>
@@ -161,11 +166,7 @@ export default function Navigation({ onSave, onLoad, onExport, onShare }) {
             title="Toggle theme"
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
           >
-            {theme === 'light' ? (
-              <Moon className="w-4 h-4" />
-            ) : (
-              <Sun className="w-4 h-4" />
-            )}
+            {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             <span className="sr-only">{theme === 'light' ? 'Dark mode' : 'Light mode'}</span>
           </Button>
         </div>

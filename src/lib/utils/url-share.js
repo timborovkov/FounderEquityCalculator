@@ -16,7 +16,7 @@ export function encodeStateToURL(state) {
       rounds: state.rounds,
       employees: state.employees,
       optionPool: state.optionPool,
-      scenarios: state.scenarios
+      scenarios: state.scenarios,
     }
 
     // Convert to JSON and compress
@@ -24,10 +24,7 @@ export function encodeStateToURL(state) {
     const compressed = compress(json)
 
     // Encode to base64 URL-safe
-    const encoded = btoa(compressed)
-      .replace(/\+/g, '-')
-      .replace(/\//g, '_')
-      .replace(/=/g, '')
+    const encoded = btoa(compressed).replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '')
 
     return encoded
   } catch (error) {
@@ -42,12 +39,10 @@ export function encodeStateToURL(state) {
 export function decodeStateFromURL(encoded) {
   try {
     // Decode from base64 URL-safe
-    const base64 = encoded
-      .replace(/-/g, '+')
-      .replace(/_/g, '/')
+    const base64 = encoded.replace(/-/g, '+').replace(/_/g, '/')
 
     // Add padding if needed
-    const padded = base64 + '==='.slice(0, (4 - base64.length % 4) % 4)
+    const padded = base64 + '==='.slice(0, (4 - (base64.length % 4)) % 4)
 
     // Decompress and parse
     const compressed = atob(padded)
