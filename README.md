@@ -50,17 +50,20 @@ A comprehensive web application for startup founders to plan equity splits, mode
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/founder-equity-calculator.git
 cd founder-equity-calculator
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 ```
@@ -186,4 +189,3 @@ For questions, issues, or feature requests, please open an issue on GitHub.
 ---
 
 Made with ❤️ for founders
-
